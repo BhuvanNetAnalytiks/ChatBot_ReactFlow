@@ -1,6 +1,5 @@
-// src/components/CombinedFlow.jsx
 import React, { useCallback, useEffect } from 'react';
-import { useNodesState, useEdgesState, addEdge, useReactFlow } from '@xyflow/react';
+import { useNodesState, useEdgesState, addEdge, useReactFlow } from '@xyflow/react'; // Import useReactFlow
 import Flow from './mainFlow';
 import GreetingNode from './greetingNode';
 import DepartmentSelector from './departmentSelector';
@@ -10,7 +9,7 @@ import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
 import serviceNowViewJson from '../../data/viewServiceNow.json';
-import chatbotJson from '../../data/chatBot.json'
+import chatbotJson from '../../data/chatBot.json';
 import jiraCreateJson from '../../data/createJira.json';
 import jiraViewJson from '../../data/viewJira.json';
 import zendeskCreateJson from '../../data/createZendesk.json';
@@ -19,25 +18,28 @@ import zendeskViewJson from '../../data/viewZendesk.json';
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
+        // Predefined edges
         {
             id: 'edge-1',
             source: 'greeting-1',
-            target: 'chatbot-1',
+            target: 'department-1',
         },
         {
             id: 'edge-2',
             source: 'department-1',
-            target: 'chatbot-1',
+            target: 'ticketing-1',
         },
         {
             id: 'edge-3',
             source: 'ticketing-1',
             target: 'chatbot-1',
-        }
+        },
     ]);
 
+    // Use useReactFlow to access the store
     const { getEdges } = useReactFlow();
 
+    // Add keydown event listener to delete selected edges
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
@@ -64,7 +66,7 @@ const CombinedFlow = () => {
         };
     }, [getEdges, setEdges]);
 
-    // Initialize both greeting and department nodes
+    // Initialize nodes
     useEffect(() => {
         setNodes([
             {
@@ -152,14 +154,15 @@ const CombinedFlow = () => {
                 },
             },
             {
-                    id: 'chatbot-1',
-                    type: 'chatbotNode',
-                    position: { x: 500, y: 400 },
-                    data: {}, // No data is needed since the node is just a heading
+                id: 'chatbot-1',
+                type: 'chatbotNode',
+                position: { x: 500, y: 400 },
+                data: {}, // No data is needed since the node is just a heading
             },
         ]);
     }, [setNodes]);
 
+    // Allow users to create edges interactively
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
@@ -179,13 +182,13 @@ const CombinedFlow = () => {
             greetingNode: (node) => ({
                 ...greetingJson.steps[0],
                 parameters: [{ name: 'greeting', value: node.data.greeting, type: 'body' }],
-            }), 
+            }),
             departmentNode: (node) => ({
                 ...departmentJson.steps[0],
                 parameters: node.data.departments.map((dept) => ({
                     name: 'department',
                     value: dept,
-                    type: 'body'
+                    type: 'body',
                 })),
             }),
             ticketingNode: (node) => {
@@ -194,20 +197,18 @@ const CombinedFlow = () => {
                         create: serviceNowCreateJson.steps[0], // Include create step
                         view: serviceNowViewJson.steps[0],    // Include view step
                     };
-                }
-                else if (node.data.selected === 'Jira') {
+                } else if (node.data.selected === 'Jira') {
                     return {
                         create: jiraCreateJson.steps[0], // Include create step
                         view: jiraViewJson.steps[0],    // Include view step
                     };
-                }
-                else if (node.data.selected === 'Zendesk') {
+                } else if (node.data.selected === 'Zendesk') {
                     return {
                         create: zendeskCreateJson.steps[0], // Include create step
                         view: zendeskViewJson.steps[0],    // Include view step
                     };
                 }
-                return null;    
+                return null;
             },
             chatbotNode: (node) => {
                 // Return a valid step object for the chatbot node
@@ -215,21 +216,22 @@ const CombinedFlow = () => {
                     ...chatbotJson.steps[0], // Use the chatbot JSON template
                     parameters: [], // Add any necessary parameters here
                 };
-            },        
-
+            },
         };
 
         // Build an array of step objects for each node that has a mapping.
         const combinedSteps = nodes.reduce((acc, node) => {
             const mapper = stepMapping[node.type];
-            const steps = mapper(node);
-            if (steps) {
-                // If the steps are an object with create and view properties, add both to the accumulator
-                if (steps.create && steps.view) {
-                    acc.push(steps.create, steps.view);
-                } else {
-                    // Otherwise, add the single step
-                    acc.push(steps);
+            if (mapper) {
+                const steps = mapper(node);
+                if (steps) {
+                    // If the steps are an object with create and view properties, add both to the accumulator
+                    if (steps.create && steps.view) {
+                        acc.push(steps.create, steps.view);
+                    } else {
+                        // Otherwise, add the single step
+                        acc.push(steps);
+                    }
                 }
             }
             return acc;
@@ -270,7 +272,7 @@ const CombinedFlow = () => {
             {/* Single common save button */}
             <button
                 onClick={saveCombinedGraphToFile}
-                style={{ position: 'absolute', zIndex: 10, padding: 10, color:'blue' }}
+                style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
             >
                 Build Json
             </button>
