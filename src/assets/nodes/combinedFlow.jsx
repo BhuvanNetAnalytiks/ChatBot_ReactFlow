@@ -5,10 +5,12 @@ import Flow from './mainFlow';
 import GreetingNode from './greetingNode';
 import DepartmentSelector from './departmentSelector';
 import TicketingNode from './ticketingNode';
+import ChatbotNode from './chatInitiation';
 import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
 import serviceNowViewJson from '../../data/viewServiceNow.json';
+import chatbotJson from '../../data/chatBot.json'
 import jiraCreateJson from '../../data/createJira.json';
 import jiraViewJson from '../../data/viewJira.json';
 import zendeskCreateJson from '../../data/createZendesk.json';
@@ -105,6 +107,12 @@ const CombinedFlow = () => {
                         ),
                 },
             },
+            {
+                    id: 'chatbot-1',
+                    type: 'chatbotNode',
+                    position: { x: 20, y: 400 },
+                    data: {}, // No data is needed since the node is just a heading
+            },
         ]);
     }, [setNodes]);
 
@@ -117,6 +125,7 @@ const CombinedFlow = () => {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
         ticketingNode: TicketingNode,
+        chatbotNode: ChatbotNode,
     };
 
     // Combined save function: Map each node type to its JSON template and merge them
@@ -155,7 +164,15 @@ const CombinedFlow = () => {
                     };
                 }
                 return null;    
-            }
+            },
+            chatbotNode: (node) => {
+                // Return a valid step object for the chatbot node
+                return {
+                    ...chatbotJson.steps[0], // Use the chatbot JSON template
+                    parameters: [], // Add any necessary parameters here
+                };
+            },        
+
         };
 
         // Build an array of step objects for each node that has a mapping.

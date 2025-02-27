@@ -1,0 +1,11 @@
+{
+    "steps": [
+        {
+            "function": "handle_chatbot",
+            "module": "main_library.chatbot",
+            "endpoint": "/chatbot",
+            "methods": ["POST"],
+            "parameters": []
+        }
+    ]
+}
