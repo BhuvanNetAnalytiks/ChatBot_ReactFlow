@@ -9,7 +9,7 @@ const TicketingNode = ({ data }) => {
       data.onChange(e.target.value);
     }
   };
-
+ 
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
       <h4>Ticketing System Node</h4>
@@ -30,5 +30,5 @@ const TicketingNode = ({ data }) => {
     </div>
   );
 };
-
+ 
 export default TicketingNode;

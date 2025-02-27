@@ -15,7 +15,7 @@ const GreetingNode = ({ data }) => {
           style={{ marginLeft: 5 }}
         />
       </label>
-      <NodeOptions id={data.id} onOptions={data.onOptions} /> 
+      <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
                 type="source" // This handle is for incoming connections
                 position={Position.Bottom} // Position the handle at the top of the node
@@ -24,5 +24,5 @@ const GreetingNode = ({ data }) => {
     </div>
   );
 };
-
+ 
 export default GreetingNode;

@@ -24,5 +24,5 @@ const ChatbotNode = ({ data }) => {
         </div>
     );
 };
-
+ 
 export default ChatbotNode;

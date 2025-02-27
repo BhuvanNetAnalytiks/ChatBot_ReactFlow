@@ -30,5 +30,5 @@ const DepartmentSelector = ({ data }) => {
     </div>
   );
 };
-
+ 
 export default DepartmentSelector;

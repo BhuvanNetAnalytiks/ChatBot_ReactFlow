@@ -15,7 +15,7 @@ import jiraCreateJson from '../../data/createJira.json';
 import jiraViewJson from '../../data/viewJira.json';
 import zendeskCreateJson from '../../data/createZendesk.json';
 import zendeskViewJson from '../../data/viewZendesk.json';
-
+ 
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
@@ -35,9 +35,9 @@ const CombinedFlow = () => {
             target: 'chatbot-1',
         }
     ]);
-
+ 
     const { getEdges } = useReactFlow();
-
+ 
     // Handle node options (NEW FUNCTION)
     const handleNodeOptions = useCallback((nodeId, action) => {
         switch (action) {
@@ -75,33 +75,33 @@ const CombinedFlow = () => {
                 break;
         }
     }, [setNodes, setEdges]);
-
+ 
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
                 // Get all edges from the store
                 const edges = getEdges();
-
+ 
                 // Filter the selected edges
                 const selectedEdges = edges.filter((edge) => edge.selected);
-
+ 
                 // Get the IDs of the selected edges
                 const selectedEdgeIds = selectedEdges.map((edge) => edge.id);
-
+ 
                 // Filter out the selected edges
                 setEdges((eds) => eds.filter((edge) => !selectedEdgeIds.includes(edge.id)));
             }
         };
-
+ 
         // Add event listener
         window.addEventListener('keydown', handleKeyDown);
-
+ 
         // Cleanup event listener
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [getEdges, setEdges]);
-
+ 
     // Initialize both greeting and department nodes
     useEffect(() => {
         setNodes([
@@ -202,23 +202,23 @@ const CombinedFlow = () => {
                 data: {
                     id: 'chatbot-1', // Add id to data
                     onOptions: handleNodeOptions, // Add onOptions handler
-                }, 
+                },
             },
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
-
+ 
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
     );
-
+ 
     const nodeTypes = {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
         ticketingNode: TicketingNode,
         chatbotNode: ChatbotNode,
     };
-
+ 
     // Combined save function: Map each node type to its JSON template and merge them
     const saveCombinedGraphToFile = useCallback(async () => {
         // Define a mapping from node type to a function that returns the corresponding step object.
@@ -226,7 +226,7 @@ const CombinedFlow = () => {
             greetingNode: (node) => ({
                 ...greetingJson.steps[0],
                 parameters: [{ name: 'greeting', value: node.data.greeting, type: 'body' }],
-            }), 
+            }),
             departmentNode: (node) => ({
                 ...departmentJson.steps[0],
                 parameters: node.data.departments.map((dept) => ({
@@ -263,9 +263,9 @@ const CombinedFlow = () => {
                     parameters: [], // Add any necessary parameters here
                 };
             },        
-
+ 
         };
-
+ 
         // Build an array of step objects for each node that has a mapping.
         const combinedSteps = nodes.reduce((acc, node) => {
             const mapper = stepMapping[node.type];
@@ -281,10 +281,10 @@ const CombinedFlow = () => {
             }
             return acc;
         }, []);
-
+ 
         const combinedJson = { steps: combinedSteps };
         const jsonData = JSON.stringify(combinedJson, null, 2);
-
+ 
         try {
             const handle = await window.showSaveFilePicker({
                 suggestedName: 'combinedGraph.json',
@@ -304,7 +304,7 @@ const CombinedFlow = () => {
             alert('Error saving file: ' + error.message);
         }
     }, [nodes]);
-
+ 
     return (
         <Flow
             nodes={nodes}
@@ -324,5 +324,5 @@ const CombinedFlow = () => {
         </Flow>
     );
 };
-
+ 
 export default CombinedFlow;
