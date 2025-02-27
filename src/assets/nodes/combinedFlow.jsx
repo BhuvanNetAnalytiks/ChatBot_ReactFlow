@@ -6,6 +6,7 @@ import GreetingNode from './greetingNode';
 import DepartmentSelector from './departmentSelector';
 import TicketingNode from './ticketingNode';
 import ChatbotNode from './chatInitiation';
+import StartNode  from './start';
 import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
@@ -15,25 +16,12 @@ import jiraCreateJson from '../../data/createJira.json';
 import jiraViewJson from '../../data/viewJira.json';
 import zendeskCreateJson from '../../data/createZendesk.json';
 import zendeskViewJson from '../../data/viewZendesk.json';
+import StartNodeJson from '../../data/StartNode.json'
  
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
-        {
-            id: 'edge-1',
-            source: 'greeting-1',
-            target: 'chatbot-1',
-        },
-        {
-            id: 'edge-2',
-            source: 'department-1',
-            target: 'chatbot-1',
-        },
-        {
-            id: 'edge-3',
-            source: 'ticketing-1',
-            target: 'chatbot-1',
-        }
+        
     ]);
  
     const { getEdges } = useReactFlow();
@@ -204,6 +192,16 @@ const CombinedFlow = () => {
                     onOptions: handleNodeOptions, // Add onOptions handler
                 },
             },
+            {
+                id: 'startnode-1',
+                type: 'startNode',
+                position: { x: 700, y:600},
+                data: {
+                    id: 'startnode-1',
+                    onOptions: handleNodeOptions,
+                }
+
+            }
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
  
@@ -217,6 +215,7 @@ const CombinedFlow = () => {
         departmentNode: DepartmentSelector,
         ticketingNode: TicketingNode,
         chatbotNode: ChatbotNode,
+        startNode: StartNode,
     };
  
     // Combined save function: Map each node type to its JSON template and merge them
@@ -262,7 +261,13 @@ const CombinedFlow = () => {
                     ...chatbotJson.steps[0], // Use the chatbot JSON template
                     parameters: [], // Add any necessary parameters here
                 };
-            },        
+            }, 
+            startNode: (node) => {
+                return{
+                    ...StartNode.steps[0],
+                    parameters: [],
+                };
+            }       
  
         };
  
