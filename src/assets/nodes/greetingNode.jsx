@@ -1,6 +1,6 @@
 // src/components/GreetingNode.jsx
 import React from 'react';
-
+import { Handle, Position } from '@xyflow/react';
 const GreetingNode = ({ data }) => {
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
@@ -14,6 +14,11 @@ const GreetingNode = ({ data }) => {
           style={{ marginLeft: 5 }}
         />
       </label>
+      <Handle
+                type="source" // This handle is for incoming connections
+                position={Position.Bottom} // Position the handle at the top of the node
+                style={{ background: '#555' }} // Customize the handle style
+            />
     </div>
   );
 };

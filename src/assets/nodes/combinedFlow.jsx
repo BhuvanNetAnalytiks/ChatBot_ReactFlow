@@ -42,7 +42,7 @@ const CombinedFlow = () => {
             {
                 id: 'department-1',
                 type: 'departmentNode',
-                position: { x: 500, y: 200 },
+                position: { x: 900, y: 60 },
                 data: {
                     departments: ['IT', 'FINANCE', 'HR'],
                     newDepartment: '',
@@ -94,7 +94,7 @@ const CombinedFlow = () => {
             {
                 id: 'ticketing-1',
                 type: 'ticketingNode',
-                position: { x: 20, y: 200 },
+                position: { x: 500, y: 50 },
                 data: {
                     selected: 'ServiceNow',
                     onChange: (value) =>
@@ -110,7 +110,7 @@ const CombinedFlow = () => {
             {
                     id: 'chatbot-1',
                     type: 'chatbotNode',
-                    position: { x: 20, y: 400 },
+                    position: { x: 500, y: 400 },
                     data: {}, // No data is needed since the node is just a heading
             },
         ]);

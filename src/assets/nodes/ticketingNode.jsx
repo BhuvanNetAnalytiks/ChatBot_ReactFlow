@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Handle, Position } from '@xyflow/react';
 const TicketingNode = ({ data }) => {
   // data.selected holds the current selection.
   // data.onChange is called when the user selects a different ticketing system.
@@ -20,6 +20,11 @@ const TicketingNode = ({ data }) => {
           <option value="Zendesk">Zendesk</option>
         </select>
       </label>
+      <Handle
+        type="source" // This handle is for incoming connections
+        position={Position.Bottom} // Position the handle at the top of the node
+        style={{ background: '#555' }} // Customize the handle style
+      />
     </div>
   );
 };
