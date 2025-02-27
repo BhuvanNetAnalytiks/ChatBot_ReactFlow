@@ -1,10 +1,11 @@
 import React from 'react';
 import { Handle, Position } from '@xyflow/react';
-
+import NodeOptions from "./NodeOptions";
 const ChatbotNode = ({ data }) => {
     return (
         <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
             <h4>Initialize ChatBot</h4>
+            <NodeOptions id={data.id} onOptions={data.onOptions} />
             <Handle
                 type="target" // This handle is for incoming connections
                 position={Position.Top} // Position the handle at the top of the node

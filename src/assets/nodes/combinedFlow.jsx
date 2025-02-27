@@ -38,6 +38,44 @@ const CombinedFlow = () => {
 
     const { getEdges } = useReactFlow();
 
+    // Handle node options (NEW FUNCTION)
+    const handleNodeOptions = useCallback((nodeId, action) => {
+        switch (action) {
+            case 'delete':
+                setNodes((nds) => nds.filter((node) => node.id !== nodeId));
+                setEdges((eds) => eds.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
+                break;
+            case 'copy':
+                setNodes((nds) => {
+                    const nodeToCopy = nds.find((node) => node.id === nodeId);
+                    if (nodeToCopy) {
+                        const newId = `${nodeId.split('-')[0]}-${Date.now()}`;
+                        const newNode = {
+                            ...nodeToCopy,
+                            id: newId,
+                            position: {
+                                x: nodeToCopy.position.x + 50,
+                                y: nodeToCopy.position.y + 50,
+                            },
+                        };
+                        return [...nds, newNode];
+                    }
+                    return nds;
+                });
+                break;
+            case 'change':
+                // Implement change block functionality
+                console.log('Change block for node', nodeId);
+                break;
+            case 'about':
+                // Implement about node functionality
+                console.log('About node', nodeId);
+                break;
+            default:
+                break;
+        }
+    }, [setNodes, setEdges]);
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
@@ -73,6 +111,8 @@ const CombinedFlow = () => {
                 position: { x: 20, y: 60 },
                 data: {
                     greeting: '',
+                    id: 'greeting-1', // Add id to data
+                    onOptions: handleNodeOptions, // Add onOptions handler
                     onChange: (value) =>
                         setNodes((nds) =>
                             nds.map((node) =>
@@ -90,6 +130,8 @@ const CombinedFlow = () => {
                 data: {
                     departments: ['IT', 'FINANCE', 'HR'],
                     newDepartment: '',
+                    id: 'department-1', // Add id to data
+                    onOptions: handleNodeOptions, // Add onOptions handler
                     addDepartment: () =>
                         setNodes((nds) =>
                             nds.map((node) => {
@@ -141,6 +183,8 @@ const CombinedFlow = () => {
                 position: { x: 500, y: 50 },
                 data: {
                     selected: 'ServiceNow',
+                    id: 'ticketing-1', // Add id to data
+                    onOptions: handleNodeOptions, // Add onOptions handler
                     onChange: (value) =>
                         setNodes((nds) =>
                             nds.map((node) =>
@@ -152,13 +196,16 @@ const CombinedFlow = () => {
                 },
             },
             {
-                    id: 'chatbot-1',
-                    type: 'chatbotNode',
-                    position: { x: 500, y: 400 },
-                    data: {}, // No data is needed since the node is just a heading
+                id: 'chatbot-1',
+                type: 'chatbotNode',
+                position: { x: 500, y: 400 },
+                data: {
+                    id: 'chatbot-1', // Add id to data
+                    onOptions: handleNodeOptions, // Add onOptions handler
+                }, 
             },
         ]);
-    }, [setNodes]);
+    }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
 
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
