@@ -18,7 +18,23 @@ import zendeskViewJson from '../../data/viewZendesk.json';
 
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([
+        {
+            id: 'edge-1',
+            source: 'greeting-1',
+            target: 'chatbot-1',
+        },
+        {
+            id: 'edge-2',
+            source: 'department-1',
+            target: 'chatbot-1',
+        },
+        {
+            id: 'edge-3',
+            source: 'ticketing-1',
+            target: 'chatbot-1',
+        }
+    ]);
 
     // Initialize both greeting and department nodes
     useEffect(() => {
@@ -226,9 +242,9 @@ const CombinedFlow = () => {
             {/* Single common save button */}
             <button
                 onClick={saveCombinedGraphToFile}
-                style={{ position: 'absolute', zIndex: 10, padding: 10 }}
+                style={{ position: 'absolute', zIndex: 10, padding: 10, color:'blue' }}
             >
-                Save JSON
+                Build Json
             </button>
         </Flow>
     );
