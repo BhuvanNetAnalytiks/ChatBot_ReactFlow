@@ -96,7 +96,7 @@ const CombinedFlow = () => {
             {
                 id: 'greeting-1',
                 type: 'greetingNode',
-                position: { x: 20, y: 60 },
+                position: { x: 350, y: 60 },
                 data: {
                     greeting: '',
                     id: 'greeting-1', // Add id to data
@@ -114,7 +114,7 @@ const CombinedFlow = () => {
             {
                 id: 'department-1',
                 type: 'departmentNode',
-                position: { x: 900, y: 60 },
+                position: { x: 1100, y: 60 },
                 data: {
                     departments: ['IT', 'FINANCE', 'HR'],
                     newDepartment: '',
@@ -168,7 +168,7 @@ const CombinedFlow = () => {
             {
                 id: 'ticketing-1',
                 type: 'ticketingNode',
-                position: { x: 500, y: 50 },
+                position: { x: 750, y: 60 },
                 data: {
                     selected: 'ServiceNow',
                     id: 'ticketing-1', // Add id to data
@@ -195,7 +195,7 @@ const CombinedFlow = () => {
             {
                 id: 'startnode-1',
                 type: 'startNode',
-                position: { x: 700, y:600},
+                position: { x: 200, y:60},
                 data: {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
@@ -264,7 +264,7 @@ const CombinedFlow = () => {
             }, 
             startNode: (node) => {
                 return{
-                    ...StartNode.steps[0],
+                    ...StartNodeJson.steps[0],
                     parameters: [],
                 };
             }       
