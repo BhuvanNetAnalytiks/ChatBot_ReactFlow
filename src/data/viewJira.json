@@ -1,0 +1,16 @@
+{
+    "steps": [
+        {
+            "function":"view_jira_ticket_status",
+            "module":"main_library.view_jira_incident",
+            "endpoint":"/view_jira_incident",
+            "methods":["GET"],
+            "parameters":[
+              {
+                "name": "ticket_id",
+                "type": "body"
+              }
+            ]
+        }
+    ]
+  }

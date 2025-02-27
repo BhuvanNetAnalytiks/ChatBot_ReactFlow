@@ -1,0 +1,16 @@
+{
+    "steps": [
+        {
+            "function":"view_zendesk_ticket_detailed",
+            "module":"main_library.view_zendesk_incident",
+            "endpoint":"/view_zendesk_incident",
+            "methods":["GET"],
+            "parameters":[
+              {
+                "name": "ticket_id",
+                "type": "body"
+              }
+            ]
+        }                
+    ]
+  }

@@ -1,0 +1,12 @@
+{
+    "steps": [
+      {
+        "function": "departmentSelection",
+        "module": "main_library.departmentSelection",
+        "endpoint": "/departmentSelection",
+        "methods": ["POST"],
+        "parameters": []
+      }
+    ]
+  }
+  

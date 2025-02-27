@@ -1,0 +1,28 @@
+{
+    "steps": [
+        {
+            "function": "create_jira_ticket",
+            "module": "main_library.create_jira_incident",
+            "endpoint": "/create_jira_incident",
+            "methods": ["POST"],
+            "parameters": [
+              {
+                "name": "project_key",
+                "type": "body"
+              },
+              {
+                "name": "summary",
+                "type": "body"  
+              },
+              {
+                "name": "description",
+                "type": "body"
+              },
+              {
+                "name": "issuetype",
+                "type": "body"
+              }
+            ]
+        }           
+    ]
+  }

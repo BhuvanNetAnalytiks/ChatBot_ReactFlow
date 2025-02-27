@@ -1,0 +1,20 @@
+{
+    "steps": [
+        {
+            "function":"view_ticket_detailed",
+            "module":"main_library.view_servicenow_incident",
+            "endpoint":"/view_servicenow_incident",
+            "methods":["GET"],
+            "parameters": [
+              {
+                "name": "incident_id",
+                "type": "body"
+              },
+              {
+                "name": "sys_id",
+                "type": "body"
+              }
+            ]
+        }        
+    ]
+  }

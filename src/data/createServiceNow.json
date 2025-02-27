@@ -1,0 +1,24 @@
+{
+    "steps": [
+        {
+            "function": "create_servicenow_incident",
+            "module": "main_library.create_servicenow_incidenet",
+            "endpoint": "/create_servicenow_incident",
+            "methods": ["POST"],
+            "parameters":[
+              {
+                "name": "description",
+                "type": "body"
+              },
+              {
+                "name": "urgency",
+                "type": "body"
+              },
+              {
+                "name": "impact",
+                "type": "body"
+              }
+            ]
+        }    
+    ]
+  }
