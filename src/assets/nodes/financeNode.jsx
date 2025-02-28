@@ -11,6 +11,11 @@ const Financenode = ({ data }) => {
                 position={Position.Left} // Position the handle at the top of the node
                 style={{ background: '#555' }} // Customize the handle style
             />
+            <Handle
+                type="source" // This handle is for incoming connections
+                position={Position.Right} // Position the handle at the top of the node
+                style={{ background: '#555' }} // Customize the handle style
+            />  
 
         </div>
     );

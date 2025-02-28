@@ -7,20 +7,15 @@ const DepartmentDetection = ({ data }) => {
             <h4>Department Detection</h4>
             <NodeOptions id={data.id} onOptions={data.onOptions} />
             <Handle
-                type="target" // This handle is for incoming connections
-                position={Position.Top} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            />
-            <Handle
-                type="target" // This handle is for incoming connections
+        type="target" // This handle is for incoming connections
+        position={Position.Left} // Position the handle at the top of the node
+        style={{ background: '#555' }} // Customize the handle style
+      />
+      <Handle
+                type="source" // This handle is for incoming connections
                 position={Position.Right} // Position the handle at the top of the node
                 style={{ background: '#555' }} // Customize the handle style
-            />
-            <Handle
-                type="target" // This handle is for incoming connections
-                position={Position.Bottom} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            />
+            />  
         </div>
     );
 };

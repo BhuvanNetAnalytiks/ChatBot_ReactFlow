@@ -35,7 +35,9 @@ import Financenode from './financeNode';
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
-        
+        {
+            id: ''
+        }
     ]);
  
     const { getEdges } = useReactFlow();
