@@ -14,8 +14,9 @@ import ItNode from './itNode';
 import Response from './response';
 import financeNode from './financeNode';
 import gladMessageNode from './gladmessage';
-import DepartmentDetection from './departmentDetection'
-import Llm from './llm'
+import DepartmentDetection from './departmentDetection';
+import Llm from './llm';
+import incident from './incidentcreation';
 import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
@@ -297,6 +298,15 @@ const CombinedFlow = () => {
                 }
             },
             {
+                id: 'gladmessagenode-2',
+                type: 'GladMessageNode',
+                position: { x:2200, y:60},
+                data:{
+                    id: 'gladmessagenode-2',
+                    onOptions: handleNodeOptions,
+                }   
+            },
+            {
                 id: 'llmnode-1',
                 type: 'LLM',
                 position: {x:2500, y:60},
@@ -304,7 +314,17 @@ const CombinedFlow = () => {
                     id: 'llmnode-1',
                     onOptions: handleNodeOptions,
                 }
-            }       
+            },
+            {
+                id: 'incident-1',
+                type: 'incidentCreation',
+                position: {x:2700, y:60},
+                data:{
+                    id: 'incident-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
  
@@ -328,6 +348,7 @@ const CombinedFlow = () => {
         MilvusDatabaseNode: milvusdatabase,
         GladMessageNode: gladMessageNode,
         LLM: Llm,
+        incidentCreation : incident,
     };
  
     // Combined save function: Map each node type to its JSON template and merge them
@@ -412,7 +433,11 @@ const CombinedFlow = () => {
             },
             LLM: (node) => {
                 return null;
-            }
+            },
+            incident: (node) => {
+                return null;
+            },
+
         };
  
         // Build an array of step objects for each node that has a mapping.
