@@ -6,17 +6,26 @@ import GreetingNode from './greetingNode';
 import DepartmentSelector from './departmentSelector';
 import TicketingNode from './ticketingNode';
 import ChatbotNode from './chatInitiation';
+import IdentityProvider from './identityProvider';
 import StartNode  from './start';
+import hrNode from './hrNode';
+import ItNode from './itNode';
+import financeNode from './financeNode';
+import DepartmentDetection from './departmentDetection'
 import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
 import serviceNowViewJson from '../../data/viewServiceNow.json';
-import chatbotJson from '../../data/chatBot.json'
+import chatbotJson from '../../data/chatBot.json';
 import jiraCreateJson from '../../data/createJira.json';
 import jiraViewJson from '../../data/viewJira.json';
 import zendeskCreateJson from '../../data/createZendesk.json';
 import zendeskViewJson from '../../data/viewZendesk.json';
-import StartNodeJson from '../../data/StartNode.json'
+import StartNodeJson from '../../data/StartNode.json';
+import departmentDetectionJson from '../../data/departmentDetection.json';
+import IdentityProviderJson from '../../data/identityProvider.json'; //Azure
+import GetDetAzure from '../../data/getDetails.json'; //Azure
+import Financenode from './financeNode';
  
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -96,7 +105,7 @@ const CombinedFlow = () => {
             {
                 id: 'greeting-1',
                 type: 'greetingNode',
-                position: { x: 350, y: 60 },
+                position: { x: 150, y: 50 },
                 data: {
                     greeting: '',
                     id: 'greeting-1', // Add id to data
@@ -114,7 +123,7 @@ const CombinedFlow = () => {
             {
                 id: 'department-1',
                 type: 'departmentNode',
-                position: { x: 1100, y: 60 },
+                position: { x: 715, y: -250 },
                 data: {
                     departments: ['IT', 'FINANCE', 'HR'],
                     newDepartment: '',
@@ -168,7 +177,7 @@ const CombinedFlow = () => {
             {
                 id: 'ticketing-1',
                 type: 'ticketingNode',
-                position: { x: 750, y: 60 },
+                position: { x: 1050, y: -95 },
                 data: {
                     selected: 'ServiceNow',
                     id: 'ticketing-1', // Add id to data
@@ -195,13 +204,67 @@ const CombinedFlow = () => {
             {
                 id: 'startnode-1',
                 type: 'startNode',
-                position: { x: 200, y:60},
+                position: { x: 50, y:60},
                 data: {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
                 }
 
-            }
+            },
+            {
+                id: 'departmentdetectionnode-1',
+                type: 'departmentDetection',
+                position: { x:750, y:60},
+                data:{
+                    id: 'departmentdetectionnode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'authenticationnode-1',
+                type: 'authenticationNode',
+                position: { x:480, y:50},
+                data:{
+                    selected: 'Azure',
+                    id: 'authenticatiobnode-1', 
+                    onOptions: handleNodeOptions, 
+                    onChange: (value) =>
+                        setNodes((nds) =>
+                            nds.map((node) =>
+                                node.id === 'authenticationnode-1'
+                                    ? { ...node, data: { ...node.data, selected: value } }
+                                    : node
+                            )
+                        ),
+                }
+            },
+            {
+                id: 'hrnode-1',
+                type: 'HrNode',
+                position: { x:1000, y:60},
+                data: {
+                    id: 'hrnode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'itnode-1',
+                type: 'Itnode',
+                position: { x:1200, y:60},
+                data: {
+                    id: 'itnode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'financenode-1',
+                type: 'Financenode',
+                position: { x:1400, y:60},
+                data: {
+                    id: 'financenode-1',
+                    onOptions: handleNodeOptions,
+                }
+            }         
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
  
@@ -215,7 +278,12 @@ const CombinedFlow = () => {
         departmentNode: DepartmentSelector,
         ticketingNode: TicketingNode,
         chatbotNode: ChatbotNode,
+        departmentDetection: DepartmentDetection,
+        authenticationNode: IdentityProvider,
         startNode: StartNode,
+        HrNode: hrNode,
+        Itnode: ItNode,
+        Financenode : financeNode,
     };
  
     // Combined save function: Map each node type to its JSON template and merge them
@@ -267,8 +335,28 @@ const CombinedFlow = () => {
                     ...StartNodeJson.steps[0],
                     parameters: [],
                 };
-            }       
- 
+            },
+            departmentDetection: (node) => {
+                return{
+                    ...departmentDetectionJson.steps[0],
+                    parameters: [],
+                }
+            },
+            authenticationNode: (node) => {
+                return{
+                    create: IdentityProviderJson.steps[0],
+                    view: GetDetAzure.steps[0]
+                }
+            },  
+            HrNode: (node) =>{
+                return null;
+            },
+            Itnode: (node) =>{
+                return null;
+            },
+            Financenode: (node) =>{
+                return null;
+            }
         };
  
         // Build an array of step objects for each node that has a mapping.
