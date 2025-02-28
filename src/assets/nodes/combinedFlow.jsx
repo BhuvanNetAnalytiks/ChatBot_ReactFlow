@@ -36,8 +36,89 @@ const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
         {
-            id: ''
+            id: 'e1-2',
+            source: 'startnode-1',
+            target: 'authenticationnode-1',
+
+        },
+        {
+            id: 'e2-3',
+            source: 'authenticationnode-1',
+            target: 'greeting-1',
+        },
+        {
+            id: 'e3-4',
+            source: 'greeting-1',
+            target: 'departmentdetectionnode-1',
+        },
+        {
+            id: 'e4-5',
+            source: 'departmentdetectionnode-1',
+            target: 'hrnode-1',
+        },
+        { 
+            id: 'e5-6',
+            source: 'departmentdetectionnode-1',
+            target: 'itnode-1',
+        },
+        {
+            id: 'e6-7',
+            source: 'departmentdetectionnode-1',
+            target: 'financenode-1',
+        },
+        {
+            id: 'e7-8',
+            source: 'hrnode-1',
+            target: 'milvusnode-1',
+        },
+        {
+            id: 'e8-9',
+            source: 'itnode-1',
+            target: 'milvusnode-1',
+        },
+        {
+            id: 'e9-10',
+            source: 'financenode-1',
+            target: 'milvusnode-1',
+        },
+        {
+            id: 'e10-11',
+            source: 'responsenode-1',
+            target: 'gladmessagenode-1',
+
+        },
+        {
+            id: 'e11-12',
+            source: 'milvusnode-1',
+            target: 'responsenode-1',
+        },
+        {
+            id: 'e12-13',   
+            source: 'responsenode-1',
+            target:'llmnode-1',
+        },
+        {
+            id: 'e13-14',
+            source: 'llmnode-1',
+            target: 'gladmessagenode-2',
+        },
+        {
+           id: 'e14-15',
+           source:'llmnode-1',
+           target: 'incident-1',
+        },
+        {
+            id: 'e15-16',
+            source:'ticketing-1',
+            target: 'incident-1',
+        },
+        {
+            id: 'e16-17',
+            source:'department-1',
+            target:'departmentdetectionnode-1',
         }
+        
+        
     ]);
  
     const { getEdges } = useReactFlow();
@@ -112,7 +193,7 @@ const CombinedFlow = () => {
             {
                 id: 'greeting-1',
                 type: 'greetingNode',
-                position: { x: 150, y: 50 },
+                position: { x: 480, y: 50 },
                 data: {
                     greeting: '',
                     id: 'greeting-1', // Add id to data
@@ -211,7 +292,7 @@ const CombinedFlow = () => {
             {
                 id: 'startnode-1',
                 type: 'startNode',
-                position: { x: 50, y:60},
+                position: { x: 10, y:60},
                 data: {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
@@ -230,7 +311,7 @@ const CombinedFlow = () => {
             {
                 id: 'authenticationnode-1',
                 type: 'authenticationNode',
-                position: { x:480, y:50},
+                position: { x:150, y:50},
                 data:{
                     selected: 'Azure',
                     id: 'authenticatiobnode-1', 

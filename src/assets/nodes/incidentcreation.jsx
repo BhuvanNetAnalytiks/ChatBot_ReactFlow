@@ -16,6 +16,11 @@ const incident= ({ data }) => {
                 position={Position.Right} // Position the handle at the top of the node
                 style={{ background: '#555' }} // Customize the handle style
             />  
+            <Handle
+                type="target" // This handle is for incoming connections
+                position={Position.Bottom} // Position the handle at the top of the node
+                style={{ background: '#555' }} // Customize the handle style
+            />  
 
         </div>
     );
