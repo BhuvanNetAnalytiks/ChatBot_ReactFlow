@@ -193,7 +193,7 @@ const CombinedFlow = () => {
             {
                 id: 'greeting-1',
                 type: 'greetingNode',
-                position: { x: 480, y: 50 },
+                position: { x: -20, y: 50 },
                 data: {
                     greeting: '',
                     id: 'greeting-1', // Add id to data
@@ -292,7 +292,7 @@ const CombinedFlow = () => {
             {
                 id: 'startnode-1',
                 type: 'startNode',
-                position: { x: 10, y:60},
+                position: { x: -410, y:60},
                 data: {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
@@ -302,7 +302,7 @@ const CombinedFlow = () => {
             {
                 id: 'departmentdetectionnode-1',
                 type: 'departmentDetection',
-                position: { x:750, y:60},
+                position: { x:350, y:60},
                 data:{
                     id: 'departmentdetectionnode-1',
                     onOptions: handleNodeOptions,
@@ -311,7 +311,7 @@ const CombinedFlow = () => {
             {
                 id: 'authenticationnode-1',
                 type: 'authenticationNode',
-                position: { x:150, y:50},
+                position: { x:-310, y:50},
                 data:{
                     selected: 'Azure',
                     id: 'authenticatiobnode-1', 
