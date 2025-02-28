@@ -4,7 +4,7 @@ import NodeOptions from "./NodeOptions";
 const Responsenode = ({ data }) => {
     return (
         <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
-            <h4>RESPONSE</h4>
+            <h4>Response</h4>
             <NodeOptions id={data.id} onOptions={data.onOptions} />
             <Handle
                 type="target" // This handle is for incoming connections

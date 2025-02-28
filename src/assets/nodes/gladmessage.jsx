@@ -1,19 +1,43 @@
 import React from 'react';
+
 import { Handle, Position } from '@xyflow/react';
+
 import NodeOptions from "./NodeOptions";
-const gladMessage = ({ data }) => {
+ 
+const GladMessage = ({ data }) => {
+
     return (
-        <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
-            <h4>Glad to assist you</h4>
-            <NodeOptions id={data.id} onOptions={data.onOptions} />
-            <Handle
-                type="target" // This handle is for incoming connections
-                position={Position.Left} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
+<div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
+<h4>Glad to assist you</h4>
+<NodeOptions id={data.id} onOptions={data.onOptions} />
+ 
+            {/* Target Handle for Incoming Connections */}
+<Handle
+
+                type="target"
+
+                position={Position.Left} 
+
+                style={{ background: '#555' }}
+
             />
+ 
+            {/* Source Handle for Outgoing Connections */}
+<Handle
 
-        </div>
+                type="source"
+
+                position={Position.Right} 
+
+                style={{ background: '#555' }}
+
+            />
+</div>
+
     );
-};
 
-export default gladMessage;
+};
+ 
+export default GladMessage;
+
+ 

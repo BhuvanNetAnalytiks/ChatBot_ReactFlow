@@ -7,11 +7,15 @@ import DepartmentSelector from './departmentSelector';
 import TicketingNode from './ticketingNode';
 import ChatbotNode from './chatInitiation';
 import IdentityProvider from './identityProvider';
+import milvusdatabase from './milvusDb'
 import StartNode  from './start';
 import hrNode from './hrNode';
 import ItNode from './itNode';
+import Response from './response';
 import financeNode from './financeNode';
+import gladMessageNode from './gladmessage';
 import DepartmentDetection from './departmentDetection'
+import Llm from './llm'
 import greetingJson from '../../data/greetingNode.json';
 import departmentJson from '../../data/departmentSelection.json';
 import serviceNowCreateJson from '../../data/createServiceNow.json';
@@ -264,7 +268,43 @@ const CombinedFlow = () => {
                     id: 'financenode-1',
                     onOptions: handleNodeOptions,
                 }
-            }         
+            },
+            {
+                id: 'responsenode-1',
+                type: 'Responsenode',
+                position: { x:1550, y:60},
+                data:{
+                    id: 'responsenode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'milvusnode-1',
+                type: 'MilvusDatabaseNode',
+                position: { x:1700, y:60},
+                data:{
+                    id: 'milvusnode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'gladmessagenode-1',
+                type: 'GladMessageNode',
+                position: { x:2000, y:60},
+                data:{
+                    id: 'gladmessagenode-1',
+                    onOptions: handleNodeOptions,
+                }
+            },
+            {
+                id: 'llmnode-1',
+                type: 'LLM',
+                position: {x:2500, y:60},
+                data:{
+                    id: 'llmnode-1',
+                    onOptions: handleNodeOptions,
+                }
+            }       
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
  
@@ -284,6 +324,10 @@ const CombinedFlow = () => {
         HrNode: hrNode,
         Itnode: ItNode,
         Financenode : financeNode,
+        Responsenode: Response,
+        MilvusDatabaseNode: milvusdatabase,
+        GladMessageNode: gladMessageNode,
+        LLM: Llm,
     };
  
     // Combined save function: Map each node type to its JSON template and merge them
@@ -355,6 +399,18 @@ const CombinedFlow = () => {
                 return null;
             },
             Financenode: (node) =>{
+                return null;
+            },
+            Responsenode: (node) =>{
+                return null;
+            },
+            MilvusDatabaseNode: (node) => {
+                return null;
+            },
+            GladMessageNode: (node) => {
+                return null;
+            },
+            LLM: (node) => {
                 return null;
             }
         };
