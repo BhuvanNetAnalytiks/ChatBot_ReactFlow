@@ -24,7 +24,7 @@ const TicketingNode = ({ data }) => {
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="source" // This handle is for incoming connections
-        position={Position.Bottom} // Position the handle at the top of the node
+        position={Position.Top} // Position the handle at the top of the node
         style={{ background: '#555' }} // Customize the handle style
       />
     </div>

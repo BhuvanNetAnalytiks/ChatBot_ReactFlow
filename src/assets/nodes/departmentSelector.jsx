@@ -27,13 +27,8 @@ const DepartmentSelector = ({ data }) => {
         position={Position.Bottom} // Position the handle at the top of the node
         style={{ background: '#555' }} // Customize the handle style
       />
-      <Handle
-                type="source" // This handle is for incoming connections
-                position={Position.Bottom} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            /> 
     </div>
   );
 };
- 
+
 export default DepartmentSelector;

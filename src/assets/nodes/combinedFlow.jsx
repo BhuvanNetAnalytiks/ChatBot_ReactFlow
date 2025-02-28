@@ -111,11 +111,13 @@ const CombinedFlow = () => {
             id: 'e15-16',
             source:'ticketing-1',
             target: 'incident-1',
+            targetHandle: 'targetBottomCreateTicket'
         },
         {
             id: 'e16-17',
             source:'department-1',
-            target:'departmentdetectionnode-1',
+            target: 'departmentdetectionnode-1',
+            targetHandle: 'topTarget'
         }
         
         
@@ -211,7 +213,7 @@ const CombinedFlow = () => {
             {
                 id: 'department-1',
                 type: 'departmentNode',
-                position: { x: 715, y: -250 },
+                position: { x: 330, y: -250 },
                 data: {
                     departments: ['IT', 'FINANCE', 'HR'],
                     newDepartment: '',
@@ -265,7 +267,7 @@ const CombinedFlow = () => {
             {
                 id: 'ticketing-1',
                 type: 'ticketingNode',
-                position: { x: 1050, y: -95 },
+                position: { x: 1750, y: 500 },
                 data: {
                     selected: 'ServiceNow',
                     id: 'ticketing-1', // Add id to data
@@ -329,7 +331,7 @@ const CombinedFlow = () => {
             {
                 id: 'hrnode-1',
                 type: 'HrNode',
-                position: { x:1000, y:60},
+                position: { x:700, y:-90},
                 data: {
                     id: 'hrnode-1',
                     onOptions: handleNodeOptions,
@@ -338,7 +340,7 @@ const CombinedFlow = () => {
             {
                 id: 'itnode-1',
                 type: 'Itnode',
-                position: { x:1200, y:60},
+                position: { x:700, y:60},
                 data: {
                     id: 'itnode-1',
                     onOptions: handleNodeOptions,
@@ -347,7 +349,7 @@ const CombinedFlow = () => {
             {
                 id: 'financenode-1',
                 type: 'Financenode',
-                position: { x:1400, y:60},
+                position: { x:700, y:250},
                 data: {
                     id: 'financenode-1',
                     onOptions: handleNodeOptions,
@@ -356,7 +358,7 @@ const CombinedFlow = () => {
             {
                 id: 'responsenode-1',
                 type: 'Responsenode',
-                position: { x:1550, y:60},
+                position: { x:1300, y:57},
                 data:{
                     id: 'responsenode-1',
                     onOptions: handleNodeOptions,
@@ -365,7 +367,7 @@ const CombinedFlow = () => {
             {
                 id: 'milvusnode-1',
                 type: 'MilvusDatabaseNode',
-                position: { x:1700, y:60},
+                position: { x:1000, y:45},
                 data:{
                     id: 'milvusnode-1',
                     onOptions: handleNodeOptions,
@@ -374,7 +376,7 @@ const CombinedFlow = () => {
             {
                 id: 'gladmessagenode-1',
                 type: 'GladMessageNode',
-                position: { x:2000, y:60},
+                position: { x:1500, y:10},
                 data:{
                     id: 'gladmessagenode-1',
                     onOptions: handleNodeOptions,
@@ -383,7 +385,7 @@ const CombinedFlow = () => {
             {
                 id: 'gladmessagenode-2',
                 type: 'GladMessageNode',
-                position: { x:2200, y:60},
+                position: { x:1800, y:60},
                 data:{
                     id: 'gladmessagenode-2',
                     onOptions: handleNodeOptions,
@@ -392,7 +394,7 @@ const CombinedFlow = () => {
             {
                 id: 'llmnode-1',
                 type: 'LLM',
-                position: {x:2500, y:60},
+                position: {x:1500, y:140},
                 data:{
                     id: 'llmnode-1',
                     onOptions: handleNodeOptions,
@@ -401,7 +403,7 @@ const CombinedFlow = () => {
             {
                 id: 'incident-1',
                 type: 'incidentCreation',
-                position: {x:2700, y:60},
+                position: {x:1800, y:250},
                 data:{
                     id: 'incident-1',
                     onOptions: handleNodeOptions,
