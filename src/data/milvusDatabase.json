@@ -1,0 +1,24 @@
+{
+    "steps": [
+        {
+            "function": "semantic_search_and_answer",
+            "module": "main_library.Milvus_VectorDB_extraction",
+            "endpoint": "/fetch_data_from_milvus",
+            "methods": ["GET"],
+            "parameters":[
+              {
+                "name": "question",
+                "type": "body"
+              },
+              {
+                "name": "department",
+                "type": "body"
+              },
+              {
+                "name": "top_k",
+                "type": "body"
+              }
+            ]
+        }    
+    ]
+  }

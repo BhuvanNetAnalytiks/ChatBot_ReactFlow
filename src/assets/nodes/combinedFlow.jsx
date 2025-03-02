@@ -30,6 +30,7 @@ import StartNodeJson from '../../data/StartNode.json';
 import departmentDetectionJson from '../../data/departmentDetection.json';
 import IdentityProviderJson from '../../data/identityProvider.json'; //Azure
 import GetDetAzure from '../../data/getDetails.json'; //Azure
+import MilvusDataJson from '../../data/milvusDatabase.json';
 import Financenode from './financeNode';
  
 const CombinedFlow = () => {
@@ -475,22 +476,13 @@ const CombinedFlow = () => {
             },
             chatbotNode: (node) => {
                 // Return a valid step object for the chatbot node
-                return {
-                    ...chatbotJson.steps[0], // Use the chatbot JSON template
-                    parameters: [], // Add any necessary parameters here
-                };
+                return null;
             }, 
             startNode: (node) => {
-                return{
-                    ...StartNodeJson.steps[0],
-                    parameters: [],
-                };
+                return null;
             },
             departmentDetection: (node) => {
-                return{
-                    ...departmentDetectionJson.steps[0],
-                    parameters: [],
-                }
+                return null;
             },
             authenticationNode: (node) => {
                 return{
@@ -511,7 +503,11 @@ const CombinedFlow = () => {
                 return null;
             },
             MilvusDatabaseNode: (node) => {
-                return null;
+                return{
+                    ...MilvusDataJson.steps[0],
+                    parameters: [{ "name": "question", "type": "body" }, { "name": "department", "type": "body" }, { "name": "top_k",
+                        "type": "body" }]
+                }
             },
             GladMessageNode: (node) => {
                 return null;
@@ -519,7 +515,7 @@ const CombinedFlow = () => {
             LLM: (node) => {
                 return null;
             },
-            incident: (node) => {
+            incidentCreation: (node) => {
                 return null;
             },
 
