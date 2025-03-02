@@ -1,8 +1,8 @@
 {
     "steps": [
       {
-        "function": "greeting",
-        "module": "main_library.greetingWish",
+        "function": "get_greeting",
+        "module": "main_library.get_greeting",
         "endpoint": "/greeting",
         "methods": ["POST"],
         "parameters": []
