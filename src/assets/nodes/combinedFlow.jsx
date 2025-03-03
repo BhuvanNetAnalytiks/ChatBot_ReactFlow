@@ -443,16 +443,19 @@ const CombinedFlow = () => {
         const stepMapping = {
             greetingNode: (node) => ({
                 ...greetingJson.steps[0],
-                parameters: [{ name: 'greeting', value: node.data.greeting, type: 'body' }],
+                parameters: [],
             }),
-            departmentNode: (node) => ({
-                ...departmentJson.steps[0],
-                parameters: node.data.departments.map((dept) => ({
-                    name: 'department',
-                    value: dept,
-                    type: 'body'
-                })),
-            }),
+            // departmentNode: (node) => ({
+            //     ...departmentJson.steps[0],
+            //     parameters: node.data.departments.map((dept) => ({
+            //         name: 'department',
+            //         value: dept,
+            //         type: 'body'
+            //     })),
+            // }),
+            departmentNode: (node) => {
+                return null;
+            },
             ticketingNode: (node) => {
                 if (node.data.selected === 'ServiceNow') {
                     return {
@@ -542,7 +545,7 @@ const CombinedFlow = () => {
  
         try {
             const handle = await window.showSaveFilePicker({
-                suggestedName: 'combinedGraph.json',
+                suggestedName: 'orchestration.json',
                 types: [
                     {
                         description: 'JSON Files',
