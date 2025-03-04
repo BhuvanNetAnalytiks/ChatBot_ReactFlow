@@ -283,15 +283,15 @@ const CombinedFlow = () => {
                         ),
                 },
             },
-            {
-                id: 'chatbot-1',
-                type: 'chatbotNode',
-                position: { x: 500, y: 400 },
-                data: {
-                    id: 'chatbot-1', // Add id to data
-                    onOptions: handleNodeOptions, // Add onOptions handler
-                },
-            },
+            // {
+            //     id: 'chatbot-1',
+            //     type: 'chatbotNode',
+            //     position: { x: 500, y: 400 },
+            //     data: {
+            //         id: 'chatbot-1', // Add id to data
+            //         onOptions: handleNodeOptions, // Add onOptions handler
+            //     },
+            // },
             {
                 id: 'startnode-1',
                 type: 'startNode',
@@ -423,7 +423,7 @@ const CombinedFlow = () => {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
         ticketingNode: TicketingNode,
-        chatbotNode: ChatbotNode,
+        // chatbotNode: ChatbotNode,
         departmentDetection: DepartmentDetection,
         authenticationNode: IdentityProvider,
         startNode: StartNode,

@@ -20,4 +20,4 @@ const StartNode = ({ data }) => {
     );
 };
  
-export default StartNode;
+export default StartNode; 
