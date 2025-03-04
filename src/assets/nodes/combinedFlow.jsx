@@ -40,7 +40,7 @@ const CombinedFlow = () => {
             id: 'e1-2',
             source: 'startnode-1',
             target: 'authenticationnode-1',
-
+ 
         },
         {
             id: 'e2-3',
@@ -86,7 +86,7 @@ const CombinedFlow = () => {
             id: 'e10-11',
             source: 'responsenode-1',
             target: 'gladmessagenode-1',
-
+ 
         },
         {
             id: 'e11-12',
@@ -120,17 +120,35 @@ const CombinedFlow = () => {
             target: 'departmentdetectionnode-1',
             targetHandle: 'topTarget'
         }
-
-
+ 
+ 
     ]);
-
+ 
     const [selectedNode, setSelectedNode] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { getEdges } = useReactFlow();
-
+ 
     const onNodeClick = useCallback((event, node) => {
+        console.log("Node is being clicked!")
         setSelectedNode(node);
+        setIsSidebarOpen(true);
     }, []);
-
+ 
+    const toggleSidebar = useCallback(() => {
+        setIsSidebarOpen((prev) => !prev);
+    }, []);
+ 
+    const handleOutsideClick = useCallback((event) => {
+        if (isSidebarOpen && !event.target.closest('.sidebar') && !event.target.closest('.react-flow__node')) {
+            setIsSidebarOpen(false);
+        }
+    }, [isSidebarOpen]);
+ 
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick);
+        return () => document.removeEventListener('click', handleOutsideClick);
+    }, [handleOutsideClick]);
+ 
     // Handle node options (NEW FUNCTION)
     const handleNodeOptions = useCallback((nodeId, action) => {
         switch (action) {
@@ -168,33 +186,33 @@ const CombinedFlow = () => {
                 break;
         }
     }, [setNodes, setEdges]);
-
+ 
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
                 // Get all edges from the store
                 const edges = getEdges();
-
+ 
                 // Filter the selected edges
                 const selectedEdges = edges.filter((edge) => edge.selected);
-
+ 
                 // Get the IDs of the selected edges
                 const selectedEdgeIds = selectedEdges.map((edge) => edge.id);
-
+ 
                 // Filter out the selected edges
                 setEdges((eds) => eds.filter((edge) => !selectedEdgeIds.includes(edge.id)));
             }
         };
-
+ 
         // Add event listener
         window.addEventListener('keydown', handleKeyDown);
-
+ 
         // Cleanup event listener
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [getEdges, setEdges]);
-
+ 
     // Initialize both greeting and department nodes
     useEffect(() => {
         setNodes([
@@ -305,7 +323,7 @@ const CombinedFlow = () => {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
                 }
-
+ 
             },
             {
                 id: 'departmentdetectionnode-1',
@@ -415,15 +433,15 @@ const CombinedFlow = () => {
                     onOptions: handleNodeOptions,
                 }
             },
-
+ 
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
-
+ 
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
     );
-
+ 
     const nodeTypes = {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
@@ -441,7 +459,7 @@ const CombinedFlow = () => {
         LLM: Llm,
         incidentCreation: incident,
     };
-
+ 
     // Combined save function: Map each node type to its JSON template and merge them
     const saveCombinedGraphToFile = useCallback(async () => {
         // Define a mapping from node type to a function that returns the corresponding step object.
@@ -528,9 +546,9 @@ const CombinedFlow = () => {
             incidentCreation: (node) => {
                 return null;
             },
-
+ 
         };
-
+ 
         // Build an array of step objects for each node that has a mapping.
         const combinedSteps = nodes.reduce((acc, node) => {
             const mapper = stepMapping[node.type];
@@ -546,10 +564,10 @@ const CombinedFlow = () => {
             }
             return acc;
         }, []);
-
+ 
         const combinedJson = { steps: combinedSteps };
         const jsonData = JSON.stringify(combinedJson, null, 2);
-
+ 
         try {
             const handle = await window.showSaveFilePicker({
                 suggestedName: 'orchestration.json',
@@ -569,7 +587,7 @@ const CombinedFlow = () => {
             alert('Error saving file: ' + error.message);
         }
     }, [nodes]);
-
+ 
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <Flow
@@ -580,7 +598,7 @@ const CombinedFlow = () => {
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
                 onNodeClick={onNodeClick}
-
+ 
             >
                 {/* Single common save button */}
                 <button
@@ -590,9 +608,14 @@ const CombinedFlow = () => {
                     Build Json
                 </button>
             </Flow>
-            <Sidebar selectedNode={selectedNode} />
+            <Sidebar
+                selectedNode={selectedNode}
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+            />
         </div>
     );
 };
-
+ 
 export default CombinedFlow;
+ 
