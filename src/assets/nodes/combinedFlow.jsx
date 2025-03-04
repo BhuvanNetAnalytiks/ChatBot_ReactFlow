@@ -217,7 +217,7 @@ const CombinedFlow = () => {
     useEffect(() => {
         setNodes([
             {
-                name: 'GREETING NODE',
+                name: 'GREETING ',
                 id: 'greeting-1',
                 type: 'greetingNode',
                 position: { x: -20, y: 50 },
@@ -236,7 +236,8 @@ const CombinedFlow = () => {
                 },
             },
             {
-                name:'DEPARTMENT NODE',
+                name:'DEPARTMENT ',
+                description:'The department node is responsible for selecting the department of the user prompt',
                 id: 'department-1',
                 type: 'departmentNode',
                 position: { x: 330, y: -250 },
@@ -291,7 +292,8 @@ const CombinedFlow = () => {
                 },
             },
             {
-                name: 'TICKETING NODE',
+                name: 'TICKETING ',
+                description:'The ticketing node is responsible for selecting the ticketing system for incident creation',
                 id: 'ticketing-1',
                 type: 'ticketingNode',
                 position: { x: 1750, y: 500 },
@@ -319,7 +321,8 @@ const CombinedFlow = () => {
             //     },
             // },
             {
-                name: 'START NODE',
+                name: 'START ',
+                description:'The entry point of the flow, initiating the process and directing the user or system to the next step.',
                 id: 'startnode-1',
                 type: 'startNode',
                 position: { x: -410, y: 60 },
@@ -330,7 +333,8 @@ const CombinedFlow = () => {
  
             },
             {
-                name: 'DEPARTMENT DETECTION NODE',
+                name: 'DEPARTMENT DETECTION ',
+                description:'The department detection node is responsible for identifying the department of the user prompt',
                 id: 'departmentdetectionnode-1',
                 type: 'departmentDetection',
                 position: { x: 350, y: 60 },
@@ -340,12 +344,12 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'IDENTITY PROVIDER NODE',
+                name: 'IDENTITY PROVIDER ',
                 id: 'authenticationnode-1',
                 type: 'authenticationNode',
-                description: 'Azure',
+                description: 'Select the identity provider for authentication',
                 position: { x: -310, y: 50 },
-                data: {
+                data: { 
                     selected: 'Azure',
                     id: 'authenticatiobnode-1',
                     onOptions: handleNodeOptions,
@@ -360,7 +364,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'HR NODE',
+                name: 'HR ',
+                description:'The HR department node is responsible for handling user prompts related to the Human Resources department',
                 id: 'hrnode-1',
                 type: 'HrNode',
                 position: { x: 700, y: -90 },
@@ -370,7 +375,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'IT NODE',
+                name: 'IT ',
+                description:'The IT department node is responsible for handling user prompts related to the Information Technology department',
                 id: 'itnode-1',
                 type: 'Itnode',
                 position: { x: 700, y: 60 },
@@ -380,7 +386,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'FINANCE NODE',
+                name: 'FINANCE ',
+                description:'The Finance department node is responsible for handling user prompts related to the Finance department',
                 id: 'financenode-1',
                 type: 'Financenode',
                 position: { x: 700, y: 250 },
@@ -390,7 +397,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'RESPONSE NODE',
+                name: 'RESPONSE ',
+                description:'The response node is responsible for generating a response to the user prompt',
                 id: 'responsenode-1',
                 type: 'Responsenode',
                 position: { x: 1300, y: 57 },
@@ -400,7 +408,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'MILVUS DATABASE NODE',
+                name: 'MILVUS DATABASE ',
+                description:'The Milvus database node is responsible for querying the database to retrieve the relevant information',
                 id: 'milvusnode-1',
                 type: 'MilvusDatabaseNode',
                 position: { x: 1000, y: 45 },
@@ -410,7 +419,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'GLAD MESSAGE NODE',
+                name: 'GLAD MESSAGE ',
+                description:'The glad message node is responsible for generating a positive message to the user',
                 id: 'gladmessagenode-1',
                 type: 'GladMessageNode',
                 position: { x: 1500, y: 10 },
@@ -420,7 +430,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'GLAD MESSAGE NODE',
+                name: 'GLAD MESSAGE ',
+                description:'The glad message node is responsible for generating a positive message to the user',
                 id: 'gladmessagenode-2',
                 type: 'GladMessageNode',
                 position: { x: 1800, y: 60 },
@@ -430,7 +441,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'LLM NODE',
+                name: 'LLM ',
+                description:'The LLM node is responsible for generating a response using the Large Language Model',
                 id: 'llmnode-1',
                 type: 'LLM',
                 position: { x: 1500, y: 140 },
@@ -440,7 +452,8 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name: 'INCIDENT CREATION NODE',
+                name: 'INCIDENT CREATION ',
+                description:'The incident creation node is responsible for creating an incident in the ticketing system',
                 id: 'incident-1',
                 type: 'incidentCreation',
                 position: { x: 1800, y: 250 },

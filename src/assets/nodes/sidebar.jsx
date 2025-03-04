@@ -1,5 +1,5 @@
 import React from 'react';
- 
+
 const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
     const sidebarStyle = {
         width: isOpen ? '250px' : '0', // Full width when open
@@ -15,7 +15,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
         position: 'relative',
         boxSizing: 'border-box', // Include padding/border in width calculation
     };
- 
+
     return (
         <div className="sidebar" style={sidebarStyle}>
             {isOpen && (
@@ -37,13 +37,9 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
                     {selectedNode ? (
                         <>
                             <h3>{selectedNode.name}</h3>
-                            <p><strong>ID:</strong> {selectedNode.id}</p>
-                            <p><strong>Type:</strong> {selectedNode.type}</p>
-                            <p><strong>Position:</strong> ({selectedNode.position.x}, {selectedNode.position.y})</p>
-                            <h4>Data:</h4>
-                            <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                                {JSON.stringify(selectedNode.data, null, 2)}
-                            </pre>
+                            <h4> ABOUT :  </h4>
+                            <p>{selectedNode.description}</p>
+
                         </>
                     ) : (
                         <p>Select a node to view details</p>
@@ -53,5 +49,5 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
         </div>
     );
 };
- 
+
 export default Sidebar;
