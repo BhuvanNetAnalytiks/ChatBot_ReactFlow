@@ -217,6 +217,7 @@ const CombinedFlow = () => {
     useEffect(() => {
         setNodes([
             {
+                name: 'GREETING NODE',
                 id: 'greeting-1',
                 type: 'greetingNode',
                 position: { x: -20, y: 50 },
@@ -235,6 +236,7 @@ const CombinedFlow = () => {
                 },
             },
             {
+                name:'DEPARTMENT NODE',
                 id: 'department-1',
                 type: 'departmentNode',
                 position: { x: 330, y: -250 },
@@ -289,6 +291,7 @@ const CombinedFlow = () => {
                 },
             },
             {
+                name: 'TICKETING NODE',
                 id: 'ticketing-1',
                 type: 'ticketingNode',
                 position: { x: 1750, y: 500 },
@@ -316,6 +319,7 @@ const CombinedFlow = () => {
             //     },
             // },
             {
+                name: 'START NODE',
                 id: 'startnode-1',
                 type: 'startNode',
                 position: { x: -410, y: 60 },
@@ -326,6 +330,7 @@ const CombinedFlow = () => {
  
             },
             {
+                name: 'DEPARTMENT DETECTION NODE',
                 id: 'departmentdetectionnode-1',
                 type: 'departmentDetection',
                 position: { x: 350, y: 60 },
@@ -335,8 +340,10 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'IDENTITY PROVIDER NODE',
                 id: 'authenticationnode-1',
                 type: 'authenticationNode',
+                description: 'Azure',
                 position: { x: -310, y: 50 },
                 data: {
                     selected: 'Azure',
@@ -353,6 +360,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'HR NODE',
                 id: 'hrnode-1',
                 type: 'HrNode',
                 position: { x: 700, y: -90 },
@@ -362,6 +370,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'IT NODE',
                 id: 'itnode-1',
                 type: 'Itnode',
                 position: { x: 700, y: 60 },
@@ -371,6 +380,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'FINANCE NODE',
                 id: 'financenode-1',
                 type: 'Financenode',
                 position: { x: 700, y: 250 },
@@ -380,6 +390,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'RESPONSE NODE',
                 id: 'responsenode-1',
                 type: 'Responsenode',
                 position: { x: 1300, y: 57 },
@@ -389,6 +400,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'MILVUS DATABASE NODE',
                 id: 'milvusnode-1',
                 type: 'MilvusDatabaseNode',
                 position: { x: 1000, y: 45 },
@@ -398,6 +410,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'GLAD MESSAGE NODE',
                 id: 'gladmessagenode-1',
                 type: 'GladMessageNode',
                 position: { x: 1500, y: 10 },
@@ -407,6 +420,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'GLAD MESSAGE NODE',
                 id: 'gladmessagenode-2',
                 type: 'GladMessageNode',
                 position: { x: 1800, y: 60 },
@@ -416,6 +430,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'LLM NODE',
                 id: 'llmnode-1',
                 type: 'LLM',
                 position: { x: 1500, y: 140 },
@@ -425,6 +440,7 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name: 'INCIDENT CREATION NODE',
                 id: 'incident-1',
                 type: 'incidentCreation',
                 position: { x: 1800, y: 250 },

@@ -36,7 +36,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
                     </button>
                     {selectedNode ? (
                         <>
-                            <h3>Node Details</h3>
+                            <h3>{selectedNode.name}</h3>
                             <p><strong>ID:</strong> {selectedNode.id}</p>
                             <p><strong>Type:</strong> {selectedNode.type}</p>
                             <p><strong>Position:</strong> ({selectedNode.position.x}, {selectedNode.position.y})</p>
