@@ -1,5 +1,5 @@
 // src/components/CombinedFlow.jsx
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect,useState} from 'react';
 import { useNodesState, useEdgesState, addEdge, useReactFlow } from '@xyflow/react';
 import Flow from './mainFlow';
 import GreetingNode from './greetingNode';
@@ -8,7 +8,7 @@ import TicketingNode from './ticketingNode';
 import ChatbotNode from './chatInitiation';
 import IdentityProvider from './identityProvider';
 import milvusdatabase from './milvusDb'
-import StartNode  from './start';
+import StartNode from './start';
 import hrNode from './hrNode';
 import ItNode from './itNode';
 import Response from './response';
@@ -32,7 +32,7 @@ import IdentityProviderJson from '../../data/identityProvider.json'; //Azure
 import GetDetAzure from '../../data/getDetails.json'; //Azure
 import MilvusDataJson from '../../data/milvusDatabase.json';
 import Financenode from './financeNode';
- 
+import Sidebar from './sidebar';
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
@@ -57,7 +57,7 @@ const CombinedFlow = () => {
             source: 'departmentdetectionnode-1',
             target: 'hrnode-1',
         },
-        { 
+        {
             id: 'e5-6',
             source: 'departmentdetectionnode-1',
             target: 'itnode-1',
@@ -94,9 +94,9 @@ const CombinedFlow = () => {
             target: 'responsenode-1',
         },
         {
-            id: 'e12-13',   
+            id: 'e12-13',
             source: 'responsenode-1',
-            target:'llmnode-1',
+            target: 'llmnode-1',
         },
         {
             id: 'e13-14',
@@ -104,28 +104,33 @@ const CombinedFlow = () => {
             target: 'gladmessagenode-2',
         },
         {
-           id: 'e14-15',
-           source:'llmnode-1',
-           target: 'incident-1',
+            id: 'e14-15',
+            source: 'llmnode-1',
+            target: 'incident-1',
         },
         {
             id: 'e15-16',
-            source:'ticketing-1',
+            source: 'ticketing-1',
             target: 'incident-1',
             targetHandle: 'targetBottomCreateTicket'
         },
         {
             id: 'e16-17',
-            source:'department-1',
+            source: 'department-1',
             target: 'departmentdetectionnode-1',
             targetHandle: 'topTarget'
         }
-        
-        
+
+
     ]);
- 
+
+    const [selectedNode, setSelectedNode] = useState(null);
     const { getEdges } = useReactFlow();
- 
+
+    const onNodeClick = useCallback((event, node) => {
+        setSelectedNode(node);
+    }, []);
+
     // Handle node options (NEW FUNCTION)
     const handleNodeOptions = useCallback((nodeId, action) => {
         switch (action) {
@@ -163,33 +168,33 @@ const CombinedFlow = () => {
                 break;
         }
     }, [setNodes, setEdges]);
- 
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
                 // Get all edges from the store
                 const edges = getEdges();
- 
+
                 // Filter the selected edges
                 const selectedEdges = edges.filter((edge) => edge.selected);
- 
+
                 // Get the IDs of the selected edges
                 const selectedEdgeIds = selectedEdges.map((edge) => edge.id);
- 
+
                 // Filter out the selected edges
                 setEdges((eds) => eds.filter((edge) => !selectedEdgeIds.includes(edge.id)));
             }
         };
- 
+
         // Add event listener
         window.addEventListener('keydown', handleKeyDown);
- 
+
         // Cleanup event listener
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [getEdges, setEdges]);
- 
+
     // Initialize both greeting and department nodes
     useEffect(() => {
         setNodes([
@@ -295,7 +300,7 @@ const CombinedFlow = () => {
             {
                 id: 'startnode-1',
                 type: 'startNode',
-                position: { x: -410, y:60},
+                position: { x: -410, y: 60 },
                 data: {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
@@ -305,8 +310,8 @@ const CombinedFlow = () => {
             {
                 id: 'departmentdetectionnode-1',
                 type: 'departmentDetection',
-                position: { x:350, y:60},
-                data:{
+                position: { x: 350, y: 60 },
+                data: {
                     id: 'departmentdetectionnode-1',
                     onOptions: handleNodeOptions,
                 }
@@ -314,11 +319,11 @@ const CombinedFlow = () => {
             {
                 id: 'authenticationnode-1',
                 type: 'authenticationNode',
-                position: { x:-310, y:50},
-                data:{
+                position: { x: -310, y: 50 },
+                data: {
                     selected: 'Azure',
-                    id: 'authenticatiobnode-1', 
-                    onOptions: handleNodeOptions, 
+                    id: 'authenticatiobnode-1',
+                    onOptions: handleNodeOptions,
                     onChange: (value) =>
                         setNodes((nds) =>
                             nds.map((node) =>
@@ -332,7 +337,7 @@ const CombinedFlow = () => {
             {
                 id: 'hrnode-1',
                 type: 'HrNode',
-                position: { x:700, y:-90},
+                position: { x: 700, y: -90 },
                 data: {
                     id: 'hrnode-1',
                     onOptions: handleNodeOptions,
@@ -341,7 +346,7 @@ const CombinedFlow = () => {
             {
                 id: 'itnode-1',
                 type: 'Itnode',
-                position: { x:700, y:60},
+                position: { x: 700, y: 60 },
                 data: {
                     id: 'itnode-1',
                     onOptions: handleNodeOptions,
@@ -350,7 +355,7 @@ const CombinedFlow = () => {
             {
                 id: 'financenode-1',
                 type: 'Financenode',
-                position: { x:700, y:250},
+                position: { x: 700, y: 250 },
                 data: {
                     id: 'financenode-1',
                     onOptions: handleNodeOptions,
@@ -359,8 +364,8 @@ const CombinedFlow = () => {
             {
                 id: 'responsenode-1',
                 type: 'Responsenode',
-                position: { x:1300, y:57},
-                data:{
+                position: { x: 1300, y: 57 },
+                data: {
                     id: 'responsenode-1',
                     onOptions: handleNodeOptions,
                 }
@@ -368,8 +373,8 @@ const CombinedFlow = () => {
             {
                 id: 'milvusnode-1',
                 type: 'MilvusDatabaseNode',
-                position: { x:1000, y:45},
-                data:{
+                position: { x: 1000, y: 45 },
+                data: {
                     id: 'milvusnode-1',
                     onOptions: handleNodeOptions,
                 }
@@ -377,8 +382,8 @@ const CombinedFlow = () => {
             {
                 id: 'gladmessagenode-1',
                 type: 'GladMessageNode',
-                position: { x:1500, y:10},
-                data:{
+                position: { x: 1500, y: 10 },
+                data: {
                     id: 'gladmessagenode-1',
                     onOptions: handleNodeOptions,
                 }
@@ -386,17 +391,17 @@ const CombinedFlow = () => {
             {
                 id: 'gladmessagenode-2',
                 type: 'GladMessageNode',
-                position: { x:1800, y:60},
-                data:{
+                position: { x: 1800, y: 60 },
+                data: {
                     id: 'gladmessagenode-2',
                     onOptions: handleNodeOptions,
-                }   
+                }
             },
             {
                 id: 'llmnode-1',
                 type: 'LLM',
-                position: {x:1500, y:140},
-                data:{
+                position: { x: 1500, y: 140 },
+                data: {
                     id: 'llmnode-1',
                     onOptions: handleNodeOptions,
                 }
@@ -404,8 +409,8 @@ const CombinedFlow = () => {
             {
                 id: 'incident-1',
                 type: 'incidentCreation',
-                position: {x:1800, y:250},
-                data:{
+                position: { x: 1800, y: 250 },
+                data: {
                     id: 'incident-1',
                     onOptions: handleNodeOptions,
                 }
@@ -413,12 +418,12 @@ const CombinedFlow = () => {
 
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
- 
+
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
     );
- 
+
     const nodeTypes = {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
@@ -429,14 +434,14 @@ const CombinedFlow = () => {
         startNode: StartNode,
         HrNode: hrNode,
         Itnode: ItNode,
-        Financenode : financeNode,
+        Financenode: financeNode,
         Responsenode: Response,
         MilvusDatabaseNode: milvusdatabase,
         GladMessageNode: gladMessageNode,
         LLM: Llm,
-        incidentCreation : incident,
+        incidentCreation: incident,
     };
- 
+
     // Combined save function: Map each node type to its JSON template and merge them
     const saveCombinedGraphToFile = useCallback(async () => {
         // Define a mapping from node type to a function that returns the corresponding step object.
@@ -475,12 +480,12 @@ const CombinedFlow = () => {
                         view: zendeskViewJson.steps[0],    // Include view step
                     };
                 }
-                return null;    
+                return null;
             },
             chatbotNode: (node) => {
                 // Return a valid step object for the chatbot node
                 return null;
-            }, 
+            },
             startNode: (node) => {
                 return null;
             },
@@ -488,28 +493,30 @@ const CombinedFlow = () => {
                 return null;
             },
             authenticationNode: (node) => {
-                return{
+                return {
                     create: IdentityProviderJson.steps[0],
                     view: GetDetAzure.steps[0]
                 }
-            },  
-            HrNode: (node) =>{
+            },
+            HrNode: (node) => {
                 return null;
             },
-            Itnode: (node) =>{
+            Itnode: (node) => {
                 return null;
             },
-            Financenode: (node) =>{
+            Financenode: (node) => {
                 return null;
             },
-            Responsenode: (node) =>{
+            Responsenode: (node) => {
                 return null;
             },
             MilvusDatabaseNode: (node) => {
-                return{
+                return {
                     ...MilvusDataJson.steps[0],
-                    parameters: [{ "name": "question", "type": "body" }, { "name": "department", "type": "body" }, { "name": "top_k",
-                        "type": "body" }]
+                    parameters: [{ "name": "question", "type": "body" }, { "name": "department", "type": "body" }, {
+                        "name": "top_k",
+                        "type": "body"
+                    }]
                 }
             },
             GladMessageNode: (node) => {
@@ -523,7 +530,7 @@ const CombinedFlow = () => {
             },
 
         };
- 
+
         // Build an array of step objects for each node that has a mapping.
         const combinedSteps = nodes.reduce((acc, node) => {
             const mapper = stepMapping[node.type];
@@ -539,10 +546,10 @@ const CombinedFlow = () => {
             }
             return acc;
         }, []);
- 
+
         const combinedJson = { steps: combinedSteps };
         const jsonData = JSON.stringify(combinedJson, null, 2);
- 
+
         try {
             const handle = await window.showSaveFilePicker({
                 suggestedName: 'orchestration.json',
@@ -562,25 +569,30 @@ const CombinedFlow = () => {
             alert('Error saving file: ' + error.message);
         }
     }, [nodes]);
- 
+
     return (
-        <Flow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-        >
-            {/* Single common save button */}
-            <button
-                onClick={saveCombinedGraphToFile}
-                style={{ position: 'absolute', zIndex: 10, padding: 10, color:'blue' }}
+        <div style={{ display: 'flex', height: '100vh' }}>
+            <Flow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                nodeTypes={nodeTypes}
+                onNodeClick={onNodeClick}
+
             >
-                Build Json
-            </button>
-        </Flow>
+                {/* Single common save button */}
+                <button
+                    onClick={saveCombinedGraphToFile}
+                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
+                >
+                    Build Json
+                </button>
+            </Flow>
+            <Sidebar selectedNode={selectedNode} />
+        </div>
     );
 };
- 
+
 export default CombinedFlow;
