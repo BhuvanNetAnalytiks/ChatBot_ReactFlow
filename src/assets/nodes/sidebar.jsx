@@ -2,7 +2,7 @@ import React from 'react';
 
 const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
     const sidebarStyle = {
-        width: isOpen ? '250px' : '0', // Full width when open
+        width: isOpen ? '600px' : '0', // Full width when open
         minWidth: isOpen ? '250px' : '0', // Ensure minimum width
         padding: isOpen ? '10px' : '0', // Padding only when open
         borderLeft: '1px solid #ddd',
@@ -30,6 +30,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
                             border: 'none',
                             background: 'transparent',
                             fontSize: '20px',
+                            width: '10px',
                         }}
                     >
                         ×
