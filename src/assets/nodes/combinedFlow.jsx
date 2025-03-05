@@ -226,14 +226,14 @@ const CombinedFlow = () => {
                     greeting: '',
                     id: 'greeting-1', // Add id to data
                     onOptions: handleNodeOptions, // Add onOptions handler
-                    onChange: (value) =>
-                        setNodes((nds) =>
-                            nds.map((node) =>
-                                node.id === 'greeting-1'
-                                    ? { ...node, data: { ...node.data, greeting: value } }
-                                    : node
-                            )
-                        ),
+                    // onChange: (value) =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) =>
+                    //             node.id === 'greeting-1'
+                    //                 ? { ...node, data: { ...node.data, greeting: value } }
+                    //                 : node
+                    //         )
+                    //     ),
                 },
             },
             {
@@ -247,49 +247,49 @@ const CombinedFlow = () => {
                     newDepartment: '',
                     id: 'department-1', // Add id to data
                     onOptions: handleNodeOptions, // Add onOptions handler
-                    addDepartment: () =>
-                        setNodes((nds) =>
-                            nds.map((node) => {
-                                if (node.id === 'department-1') {
-                                    const newDept = node.data.newDepartment.trim();
-                                    if (newDept) {
-                                        return {
-                                            ...node,
-                                            data: {
-                                                ...node.data,
-                                                departments: [...node.data.departments, newDept],
-                                                newDepartment: '',
-                                            },
-                                        };
-                                    }
-                                }
-                                return node;
-                            })
-                        ),
-                    removeDepartment: (index) =>
-                        setNodes((nds) =>
-                            nds.map((node) =>
-                                node.id === 'department-1'
-                                    ? {
-                                        ...node,
-                                        data: {
-                                            ...node.data,
-                                            departments: node.data.departments.filter(
-                                                (_, i) => i !== index
-                                            ),
-                                        },
-                                    }
-                                    : node
-                            )
-                        ),
-                    setNewDepartment: (value) =>
-                        setNodes((nds) =>
-                            nds.map((node) =>
-                                node.id === 'department-1'
-                                    ? { ...node, data: { ...node.data, newDepartment: value } }
-                                    : node
-                            )
-                        ),
+                    // addDepartment: () =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) => {
+                    //             if (node.id === 'department-1') {
+                    //                 const newDept = node.data.newDepartment.trim();
+                    //                 if (newDept) {
+                    //                     return {
+                    //                         ...node,
+                    //                         data: {
+                    //                             ...node.data,
+                    //                             departments: [...node.data.departments, newDept],
+                    //                             newDepartment: '',
+                    //                         },
+                    //                     };
+                    //                 }
+                    //             }
+                    //             return node;
+                    //         })
+                    //     ),
+                    // removeDepartment: (index) =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) =>
+                    //             node.id === 'department-1'
+                    //                 ? {
+                    //                     ...node,
+                    //                     data: {
+                    //                         ...node.data,
+                    //                         departments: node.data.departments.filter(
+                    //                             (_, i) => i !== index
+                    //                         ),
+                    //                     },
+                    //                 }
+                    //                 : node
+                    //         )
+                    //     ),
+                    // setNewDepartment: (value) =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) =>
+                    //             node.id === 'department-1'
+                    //                 ? { ...node, data: { ...node.data, newDepartment: value } }
+                    //                 : node
+                    //         )
+                    //     ),
                 },
             },
             {
@@ -302,14 +302,14 @@ const CombinedFlow = () => {
                     selected: 'ServiceNow',
                     id: 'ticketing-1', // Add id to data
                     onOptions: handleNodeOptions, // Add onOptions handler
-                    onChange: (value) =>
-                        setNodes((nds) =>
-                            nds.map((node) =>
-                                node.id === 'ticketing-1'
-                                    ? { ...node, data: { ...node.data, selected: value } }
-                                    : node
-                            )
-                        ),
+                    // onChange: (value) =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) =>
+                    //             node.id === 'ticketing-1'
+                    //                 ? { ...node, data: { ...node.data, selected: value } }
+                    //                 : node
+                    //         )
+                    //     ),
                 },
             },
             // {
@@ -354,14 +354,14 @@ const CombinedFlow = () => {
                     selected: 'Azure',
                     id: 'authenticatiobnode-1',
                     onOptions: handleNodeOptions,
-                    onChange: (value) =>
-                        setNodes((nds) =>
-                            nds.map((node) =>
-                                node.id === 'authenticationnode-1'
-                                    ? { ...node, data: { ...node.data, selected: value } }
-                                    : node
-                            )
-                        ),
+                    // onChange: (value) =>
+                    //     setNodes((nds) =>
+                    //         nds.map((node) =>
+                    //             node.id === 'authenticationnode-1'
+                    //                 ? { ...node, data: { ...node.data, selected: value } }
+                    //                 : node
+                    //         )
+                    //     ),
                 }
             },
             {
@@ -642,6 +642,7 @@ const CombinedFlow = () => {
                 selectedNode={selectedNode}
                 isOpen={isSidebarOpen}
                 toggleSidebar={toggleSidebar}
+                setNodes={setNodes}
             />
         </div>
     );
