@@ -218,6 +218,7 @@ const CombinedFlow = () => {
         setNodes([
             {
                 name: 'GREETING ',
+                description:'The greeting  is responsible for generating a greeting message to the user',
                 id: 'greeting-1',
                 type: 'greetingNode',
                 position: { x: -20, y: 50 },
