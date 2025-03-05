@@ -11,6 +11,7 @@ import milvusdatabase from './milvusDb'
 import StartNode from './start';
 import hrNode from './hrNode';
 import ItNode from './itNode';
+import NewNode from './AddNodes';
 import Response from './response';
 import financeNode from './financeNode';
 import gladMessageNode from './gladmessage';
@@ -189,6 +190,70 @@ const CombinedFlow = () => {
                 break;
         }
     }, [setNodes, setEdges]);
+    const syncDepartmentNodes = useCallback(() => {
+        const departmentNode = nodes.find((n) => n.id === 'department-1');
+        if (!departmentNode) return;
+    
+        const currentDepartments = departmentNode.data.departments || [];
+        const departmentNodeTypes = {
+            IT: 'Itnode',
+            HR: 'HrNode',
+            FINANCE: 'Financenode',
+        };
+    
+        // Get existing department nodes
+        const existingDeptNodes = nodes.filter((n) =>
+            ['HrNode', 'Itnode', 'Financenode', 'NewNode'].includes(n.type)
+        );
+        const existingDeptNames = existingDeptNodes.map((n) => n.data.name);
+    
+        // Add new department nodes
+        currentDepartments.forEach((dept, index) => {
+            const deptNormalized = dept.trim();
+            if (!existingDeptNames.includes(deptNormalized)) {
+                // Use specific type if it exists, otherwise use 'NewNode'
+                const nodeType = 
+                    departmentNodeTypes[deptNormalized.toUpperCase()] || 'NewNode';
+                const newNodeId = `${deptNormalized.toLowerCase()}node-${Date.now() + index}`;
+                const newNode = {
+                    id: newNodeId,
+                    type: nodeType,
+                    position: { x: 700, y: 60 + index * 150 },
+                    data: {
+                        name: deptNormalized,
+                        description: `The ${deptNormalized} department is responsible for handling user prompts related to ${deptNormalized}`,
+                        id: newNodeId,
+                        onOptions: handleNodeOptions,
+                    },
+                };
+    
+                setNodes((nds) => [...nds, newNode]);
+                setEdges((eds) => [
+                    ...eds,
+                    {
+                        id: `e-deptdetect-${newNodeId}`,
+                        source: 'departmentdetectionnode-1',
+                        target: newNodeId,
+                    },
+                    {
+                        id: `e-${newNodeId}-milvus`,
+                        source: newNodeId,
+                        target: 'milvusnode-1',
+                    },
+                ]);
+            }
+        });
+    
+        // Remove department nodes that are no longer in the list
+        existingDeptNodes.forEach((node) => {
+            if (!currentDepartments.includes(node.data.name)) {
+                setNodes((nds) => nds.filter((n) => n.id !== node.id));
+                setEdges((eds) =>
+                    eds.filter((e) => e.source !== node.id && e.target !== node.id)
+                );
+            }
+        });
+    }, [nodes, setNodes, setEdges, handleNodeOptions]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -295,6 +360,30 @@ const CombinedFlow = () => {
                     //     ),
                 },
             },
+            // {
+            //     name: 'IT ',
+            //     description: 'The IT department is responsible for handling user prompts related to the Information Technology department',
+            //     id: 'itnode-1',
+            //     type: 'Itnode',
+            //     position: { x: 700, y: 60 },
+            //     data: { id: 'itnode-1', onOptions: handleNodeOptions },
+            // },
+            // {
+            //     name: 'HR ',
+            //     description: 'The HR department is responsible for handling user prompts related to the Human Resources department',
+            //     id: 'hrnode-1',
+            //     type: 'HrNode',
+            //     position: { x: 700, y: -90 },
+            //     data: { id: 'hrnode-1', onOptions: handleNodeOptions },
+            // },
+            // {
+            //     name: 'FINANCE ',
+            //     description: 'The Finance department is responsible for handling user prompts related to the Finance department',
+            //     id: 'financenode-1',
+            //     type: 'Financenode',
+            //     position: { x: 700, y: 250 },
+            //     data: { id: 'financenode-1', onOptions: handleNodeOptions },
+            // },
             {
                 name: 'TICKETING ',
                 description: 'The ticketing  is responsible for selecting the ticketing system for incident creation',
@@ -401,6 +490,17 @@ const CombinedFlow = () => {
                 }
             },
             {
+                name:'DynamicNode',
+                description:'The dynamic node is responsible for adding new nodes dynamically',
+                id:'dynamicnode-1',
+                type:'newnode',
+                position:{x:1000, y: 500},
+                data:{
+                    id:'dynamicnode-1',
+                    onOptions: handleNodeOptions,
+                }                
+            },
+            {
                 name: 'RESPONSE ',
                 description: 'The response  is responsible for generating a response to the user prompt',
                 id: 'responsenode-1',
@@ -470,6 +570,11 @@ const CombinedFlow = () => {
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
 
+    // Sync department nodes whenever the department node's data changes
+    useEffect(() => {
+        syncDepartmentNodes();
+    }, [nodes.find((n) => n.id === 'department-1')?.data.departments, syncDepartmentNodes]);
+
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
@@ -486,6 +591,7 @@ const CombinedFlow = () => {
         HrNode: hrNode,
         Itnode: ItNode,
         Financenode: financeNode,
+        newnode: NewNode, 
         Responsenode: Response,
         MilvusDatabaseNode: milvusdatabase,
         GladMessageNode: gladMessageNode,
@@ -623,32 +729,30 @@ const CombinedFlow = () => {
 
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
-            <Flow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                onNodeClick={onNodeClick}
-
+          <Flow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            onNodeClick={onNodeClick}
+          >
+            <button
+              onClick={saveCombinedGraphToFile}
+              style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
             >
-                {/* Single common save button */}
-                <button
-                    onClick={saveCombinedGraphToFile}
-                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
-                >
-                    Build Json
-                </button>
-            </Flow>
-            <Sidebar
-                selectedNode={selectedNode}
-                isOpen={isSidebarOpen}
-                toggleSidebar={toggleSidebar}
-                setNodes={setNodes}
-            />
+              Build Json
+            </button>
+          </Flow>
+          <Sidebar
+            selectedNode={selectedNode}
+            isOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            setNodes={setNodes}
+          />
         </div>
-    );
-};
-
-export default CombinedFlow;
+      );
+    };
+    
+    export default CombinedFlow; 
