@@ -13,14 +13,9 @@ const TicketingNode = ({ data }) => {
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
       <h4>Ticketing System Node</h4>
-      <label>
-        Select Ticketing System:{' '}
-        <select value={data.selected || 'ServiceNow'} onChange={handleChange}>
-          <option value="ServiceNow">ServiceNow</option>
-          <option value="Jira">Jira</option>
-          <option value="Zendesk">Zendesk</option>
-        </select>
-      </label>
+      <p>Selected Ticketing System : {data.selected}</p>
+      
+      
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="source" // This handle is for incoming connections

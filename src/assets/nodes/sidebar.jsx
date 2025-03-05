@@ -1,58 +1,3 @@
-// import React from 'react';
-
-// const Sidebar = ({ selectedNode, isOpen, toggleSidebar , setNodes }) => {
-//     const sidebarStyle = {
-//         width: isOpen ? '500px' : '0', // Sidebar width when open
-//         padding: isOpen ? '10px' : '0', // Padding only when open
-//         position: 'fixed', // Fix sidebar position
-//         right: 0, // Attach to the right side
-//         top: 0, // Start from the top
-//         height: '100vh', // Full height
-//         backgroundColor: '#fff',
-//         borderLeft: '1px solid #ddd',
-//         transition: 'width 0.3s ease', // Smooth transition
-//         overflowY: 'auto', // Allow scrolling
-//         boxSizing: 'border-box', // Include padding/border in width calculation
-//     };
-
-
-
-//     return (
-//         <div style={sidebarStyle}>
-//             {isOpen && (
-//                 <>
-//                     <button
-//                         onClick={toggleSidebar}
-//                         style={{
-//                             position: 'absolute',
-//                             top: '10px',
-//                             right: '10px',
-//                             cursor: 'pointer',
-//                             border: 'none',
-//                             background: 'transparent',
-//                             fontSize: '20px',
-//                         }}
-//                     >
-//                         ×
-//                     </button>
-//                     {selectedNode ? (
-//                         <>
-//                             <h3>{selectedNode.name}</h3>
-//                             <h4> ABOUT : </h4>
-//                             <p>{selectedNode.description}</p>
-//                         </>
-//                     ) : (
-//                         <p>Select a node to view details</p>
-//                     )}
-//                 </>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default Sidebar;
-
-
 import React, { useState, useEffect } from 'react';
 
 const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
@@ -72,12 +17,18 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
 
   const [greetingInput, setGreetingInput] = useState('');
   const [newDepartment, setNewDepartment] = useState('');
+  const [ticketingSelected, setTicketingSelected] = useState('');
+  const [authSelected, setAuthSelected] = useState('');
+  const [departments, setDepartments] = useState([]); // Add local state for departments
 
   // Sync local state with selectedNode when it changes
   useEffect(() => {
     if (selectedNode) {
       setGreetingInput(selectedNode.data?.greeting || '');
       setNewDepartment(selectedNode.data?.newDepartment || '');
+      setTicketingSelected(selectedNode.data?.selected || 'ServiceNow');
+      setAuthSelected(selectedNode.data?.selected || 'Azure');
+      setDepartments(selectedNode.data?.departments || []); // Sync departments
     }
   }, [selectedNode]);
 
@@ -97,18 +48,22 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
 
   const handleTicketingChange = (e) => {
     const value = e.target.value;
+    setTicketingSelected(value);
     updateNodeData(selectedNode.id, { selected: value });
   };
 
   const handleAuthChange = (e) => {
     const value = e.target.value;
+    setAuthSelected(value);
     updateNodeData(selectedNode.id, { selected: value });
   };
 
   const handleAddDepartment = () => {
     if (newDepartment.trim()) {
+      const updatedDepartments = [...departments, newDepartment.trim()];
+      setDepartments(updatedDepartments); // Update local state
       updateNodeData(selectedNode.id, {
-        departments: [...selectedNode.data.departments, newDepartment.trim()],
+        departments: updatedDepartments,
         newDepartment: '',
       });
       setNewDepartment('');
@@ -116,13 +71,13 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
   };
 
   const handleRemoveDepartment = (index) => {
-    updateNodeData(selectedNode.id, {
-      departments: selectedNode.data.departments.filter((_, i) => i !== index),
-    });
+    const updatedDepartments = departments.filter((_, i) => i !== index);
+    setDepartments(updatedDepartments); // Update local state
+    updateNodeData(selectedNode.id, { departments: updatedDepartments });
   };
 
   return (
-    <div className="sidebar" style={sidebarStyle}> {/* Add className */}
+    <div className="sidebar" style={sidebarStyle}>
       {isOpen && (
         <>
           <button
@@ -163,7 +118,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
                 <div>
                   <h4>Departments</h4>
                   <ul>
-                    {selectedNode.data.departments.map((dept, index) => (
+                    {departments.map((dept, index) => ( // Use local departments state
                       <li key={index}>
                         {dept}{' '}
                         <button
@@ -190,7 +145,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
                 <div>
                   <h4>Select Ticketing System</h4>
                   <select
-                    value={selectedNode.data.selected}
+                    value={ticketingSelected}
                     onChange={handleTicketingChange}
                     style={{ width: '100%', padding: '5px' }}
                   >
@@ -205,7 +160,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
                 <div>
                   <h4>Select Identity Provider</h4>
                   <select
-                    value={selectedNode.data.selected}
+                    value={authSelected}
                     onChange={handleAuthChange}
                     style={{ width: '100%', padding: '5px' }}
                   >

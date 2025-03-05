@@ -5,29 +5,24 @@ import { Handle, Position } from '@xyflow/react';
 const GreetingNode = ({ data }) => {
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
-      <h4>Greeting Node</h4>
-      <label>
-        What greeting?{' '}
-        <input
-          type="text"
-          value={data.greeting}
-          onChange={(e) => data.onChange(e.target.value)}
-          style={{ marginLeft: 5 }}
-        />
-      </label>
+      <h3>Greeting </h3>
+      
+        <p>{data.greeting}</p>
+      
+
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
-                type="target" // This handle is for incoming connections
-                position={Position.Left} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            />
+        type="target" // This handle is for incoming connections
+        position={Position.Left} // Position the handle at the top of the node
+        style={{ background: '#555' }} // Customize the handle style
+      />
       <Handle
-                type="source" // This handle is for incoming connections
-                position={Position.Right} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            />       
+        type="source" // This handle is for incoming connections
+        position={Position.Right} // Position the handle at the top of the node
+        style={{ background: '#555' }} // Customize the handle style
+      />
     </div>
   );
 };
- 
+
 export default GreetingNode;

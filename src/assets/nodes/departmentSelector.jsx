@@ -10,17 +10,17 @@ const DepartmentSelector = ({ data }) => {
         {data.departments.map((dept, index) => (
           <li key={index}>
             {dept}{' '}
-            <button onClick={() => data.removeDepartment(index)}>Remove</button>
+            {/* <button onClick={() => data.removeDepartment(index)}>Remove</button> */}
           </li>
         ))}
       </ul>
-      <input
+      {/* <input
         type="text"
         value={data.newDepartment}
         onChange={(e) => data.setNewDepartment(e.target.value)}
         placeholder="New department"
-      />
-      <button onClick={data.addDepartment}>Add</button>
+      /> */}
+      {/* <button onClick={data.addDepartment}>Add</button> */}
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="source" // This handle is for incoming connections

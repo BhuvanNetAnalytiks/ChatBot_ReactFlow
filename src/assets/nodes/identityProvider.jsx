@@ -9,16 +9,19 @@ const IdentityProvider = ({ data }) => {
       data.onChange(e.target.value);
     }
   };
- 
+
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
       <h4>Identity Provider</h4>
-      <label>
+      <p>Selected Identity Provider : {data.selected}</p>
+      {/* <label>
         Select Identity Provider:{' '}
         <select value={data.selected || 'Azure'} onChange={handleChange}>
           <option value="Azure">Azure</option>
+          <option value="Google">Google</option>
+          <option value="Okta">Okta</option>
         </select>
-      </label>
+      </label> */}
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="target" // This handle is for incoming connections
@@ -26,12 +29,12 @@ const IdentityProvider = ({ data }) => {
         style={{ background: '#555' }} // Customize the handle style
       />
       <Handle
-                type="source" // This handle is for incoming connections
-                position={Position.Right} // Position the handle at the top of the node
-                style={{ background: '#555' }} // Customize the handle style
-            />  
+        type="source" // This handle is for incoming connections
+        position={Position.Right} // Position the handle at the top of the node
+        style={{ background: '#555' }} // Customize the handle style
+      />
     </div>
   );
 };
- 
+
 export default IdentityProvider;
