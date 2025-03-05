@@ -1,5 +1,5 @@
 // src/components/CombinedFlow.jsx
-import React, { useCallback, useEffect,useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNodesState, useEdgesState, addEdge, useReactFlow } from '@xyflow/react';
 import Flow from './mainFlow';
 import GreetingNode from './greetingNode';
@@ -40,7 +40,7 @@ const CombinedFlow = () => {
             id: 'e1-2',
             source: 'startnode-1',
             target: 'authenticationnode-1',
- 
+
         },
         {
             id: 'e2-3',
@@ -86,7 +86,7 @@ const CombinedFlow = () => {
             id: 'e10-11',
             source: 'responsenode-1',
             target: 'gladmessagenode-1',
- 
+
         },
         {
             id: 'e11-12',
@@ -120,35 +120,38 @@ const CombinedFlow = () => {
             target: 'departmentdetectionnode-1',
             targetHandle: 'topTarget'
         }
- 
- 
+
+
     ]);
- 
+
     const [selectedNode, setSelectedNode] = useState(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { getEdges } = useReactFlow();
- 
+
     const onNodeClick = useCallback((event, node) => {
         console.log("Node is being clicked!")
         setSelectedNode(node);
         setIsSidebarOpen(true);
     }, []);
- 
+
     const toggleSidebar = useCallback(() => {
         setIsSidebarOpen((prev) => !prev);
     }, []);
- 
+
     const handleOutsideClick = useCallback((event) => {
-        if (isSidebarOpen && !event.target.closest('.sidebar') && !event.target.closest('.react-flow__node')) {
+        const sidebar = document.querySelector('.sidebar');
+        const isClickInsideSidebar = sidebar && sidebar.contains(event.target);
+        const isClickOnNode = event.target.closest('.react-flow__node');
+        if (isSidebarOpen && !isClickInsideSidebar && !isClickOnNode) {
             setIsSidebarOpen(false);
         }
     }, [isSidebarOpen]);
- 
+
     useEffect(() => {
-        document.addEventListener('click', handleOutsideClick);
-        return () => document.removeEventListener('click', handleOutsideClick);
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
     }, [handleOutsideClick]);
- 
+
     // Handle node options (NEW FUNCTION)
     const handleNodeOptions = useCallback((nodeId, action) => {
         switch (action) {
@@ -186,39 +189,39 @@ const CombinedFlow = () => {
                 break;
         }
     }, [setNodes, setEdges]);
- 
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Delete') {
                 // Get all edges from the store
                 const edges = getEdges();
- 
+
                 // Filter the selected edges
                 const selectedEdges = edges.filter((edge) => edge.selected);
- 
+
                 // Get the IDs of the selected edges
                 const selectedEdgeIds = selectedEdges.map((edge) => edge.id);
- 
+
                 // Filter out the selected edges
                 setEdges((eds) => eds.filter((edge) => !selectedEdgeIds.includes(edge.id)));
             }
         };
- 
+
         // Add event listener
         window.addEventListener('keydown', handleKeyDown);
- 
+
         // Cleanup event listener
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [getEdges, setEdges]);
- 
+
     // Initialize both greeting and department nodes
     useEffect(() => {
         setNodes([
             {
                 name: 'GREETING ',
-                description:'The greeting  is responsible for generating a greeting message to the user',
+                description: 'The greeting  is responsible for generating a greeting message to the user',
                 id: 'greeting-1',
                 type: 'greetingNode',
                 position: { x: -20, y: 50 },
@@ -237,8 +240,8 @@ const CombinedFlow = () => {
                 },
             },
             {
-                name:'DEPARTMENT ',
-                description:'The department  is responsible for selecting the department of the user prompt',
+                name: 'DEPARTMENT ',
+                description: 'The department  is responsible for selecting the department of the user prompt',
                 id: 'department-1',
                 type: 'departmentNode',
                 position: { x: 330, y: -250 },
@@ -294,7 +297,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'TICKETING ',
-                description:'The ticketing  is responsible for selecting the ticketing system for incident creation',
+                description: 'The ticketing  is responsible for selecting the ticketing system for incident creation',
                 id: 'ticketing-1',
                 type: 'ticketingNode',
                 position: { x: 1750, y: 500 },
@@ -323,7 +326,7 @@ const CombinedFlow = () => {
             // },
             {
                 name: 'START ',
-                description:'The entry point of the flow, initiating the process and directing the user or system to the next step.',
+                description: 'The entry point of the flow, initiating the process and directing the user or system to the next step.',
                 id: 'startnode-1',
                 type: 'startNode',
                 position: { x: -410, y: 60 },
@@ -331,11 +334,11 @@ const CombinedFlow = () => {
                     id: 'startnode-1',
                     onOptions: handleNodeOptions,
                 }
- 
+
             },
             {
                 name: 'DEPARTMENT DETECTION ',
-                description:'The department detection  is responsible for identifying the department of the user prompt',
+                description: 'The department detection  is responsible for identifying the department of the user prompt',
                 id: 'departmentdetectionnode-1',
                 type: 'departmentDetection',
                 position: { x: 350, y: 60 },
@@ -350,7 +353,7 @@ const CombinedFlow = () => {
                 type: 'authenticationNode',
                 description: 'Select the identity provider for authentication',
                 position: { x: -310, y: 50 },
-                data: { 
+                data: {
                     selected: 'Azure',
                     id: 'authenticatiobnode-1',
                     onOptions: handleNodeOptions,
@@ -366,7 +369,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'HR ',
-                description:'The HR department  is responsible for handling user prompts related to the Human Resources department',
+                description: 'The HR department  is responsible for handling user prompts related to the Human Resources department',
                 id: 'hrnode-1',
                 type: 'HrNode',
                 position: { x: 700, y: -90 },
@@ -377,7 +380,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'IT ',
-                description:'The IT department  is responsible for handling user prompts related to the Information Technology department',
+                description: 'The IT department  is responsible for handling user prompts related to the Information Technology department',
                 id: 'itnode-1',
                 type: 'Itnode',
                 position: { x: 700, y: 60 },
@@ -388,7 +391,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'FINANCE ',
-                description:'The Finance department  is responsible for handling user prompts related to the Finance department',
+                description: 'The Finance department  is responsible for handling user prompts related to the Finance department',
                 id: 'financenode-1',
                 type: 'Financenode',
                 position: { x: 700, y: 250 },
@@ -399,7 +402,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'RESPONSE ',
-                description:'The response  is responsible for generating a response to the user prompt',
+                description: 'The response  is responsible for generating a response to the user prompt',
                 id: 'responsenode-1',
                 type: 'Responsenode',
                 position: { x: 1300, y: 57 },
@@ -410,7 +413,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'MILVUS DATABASE ',
-                description:'The Milvus database  is responsible for querying the database to retrieve the relevant information',
+                description: 'The Milvus database  is responsible for querying the database to retrieve the relevant information',
                 id: 'milvusnode-1',
                 type: 'MilvusDatabaseNode',
                 position: { x: 1000, y: 45 },
@@ -421,7 +424,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'GLAD MESSAGE ',
-                description:'The glad message  is responsible for generating a positive message to the user',
+                description: 'The glad message  is responsible for generating a positive message to the user',
                 id: 'gladmessagenode-1',
                 type: 'GladMessageNode',
                 position: { x: 1500, y: 10 },
@@ -432,7 +435,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'GLAD MESSAGE ',
-                description:'The glad message node is responsible for generating a positive message to the user',
+                description: 'The glad message node is responsible for generating a positive message to the user',
                 id: 'gladmessagenode-2',
                 type: 'GladMessageNode',
                 position: { x: 1800, y: 60 },
@@ -443,7 +446,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'LLM ',
-                description:'The LLM  is responsible for generating a response using the Large Language Model',
+                description: 'The LLM  is responsible for generating a response using the Large Language Model',
                 id: 'llmnode-1',
                 type: 'LLM',
                 position: { x: 1500, y: 140 },
@@ -454,7 +457,7 @@ const CombinedFlow = () => {
             },
             {
                 name: 'INCIDENT CREATION ',
-                description:'The incident creation  is responsible for creating an incident in the ticketing system',
+                description: 'The incident creation  is responsible for creating an incident in the ticketing system',
                 id: 'incident-1',
                 type: 'incidentCreation',
                 position: { x: 1800, y: 250 },
@@ -463,15 +466,15 @@ const CombinedFlow = () => {
                     onOptions: handleNodeOptions,
                 }
             },
- 
+
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
- 
+
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
     );
- 
+
     const nodeTypes = {
         greetingNode: GreetingNode,
         departmentNode: DepartmentSelector,
@@ -489,7 +492,7 @@ const CombinedFlow = () => {
         LLM: Llm,
         incidentCreation: incident,
     };
- 
+
     // Combined save function: Map each node type to its JSON template and merge them
     const saveCombinedGraphToFile = useCallback(async () => {
         // Define a mapping from node type to a function that returns the corresponding step object.
@@ -576,9 +579,9 @@ const CombinedFlow = () => {
             incidentCreation: (node) => {
                 return null;
             },
- 
+
         };
- 
+
         // Build an array of step objects for each node that has a mapping.
         const combinedSteps = nodes.reduce((acc, node) => {
             const mapper = stepMapping[node.type];
@@ -594,10 +597,10 @@ const CombinedFlow = () => {
             }
             return acc;
         }, []);
- 
+
         const combinedJson = { steps: combinedSteps };
         const jsonData = JSON.stringify(combinedJson, null, 2);
- 
+
         try {
             const handle = await window.showSaveFilePicker({
                 suggestedName: 'orchestration.json',
@@ -617,7 +620,7 @@ const CombinedFlow = () => {
             alert('Error saving file: ' + error.message);
         }
     }, [nodes]);
- 
+
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <Flow
@@ -628,7 +631,7 @@ const CombinedFlow = () => {
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
                 onNodeClick={onNodeClick}
- 
+
             >
                 {/* Single common save button */}
                 <button
@@ -647,6 +650,5 @@ const CombinedFlow = () => {
         </div>
     );
 };
- 
+
 export default CombinedFlow;
- 

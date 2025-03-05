@@ -53,8 +53,7 @@
 // export default Sidebar;
 
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
   const sidebarStyle = {
@@ -71,11 +70,17 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
     boxSizing: 'border-box',
   };
 
-  // Local state for inputs in the sidebar
-  const [greetingInput, setGreetingInput] = useState(selectedNode?.data?.greeting || '');
-  const [newDepartment, setNewDepartment] = useState(selectedNode?.data?.newDepartment || '');
+  const [greetingInput, setGreetingInput] = useState('');
+  const [newDepartment, setNewDepartment] = useState('');
 
-  // Handlers for updating node data
+  // Sync local state with selectedNode when it changes
+  useEffect(() => {
+    if (selectedNode) {
+      setGreetingInput(selectedNode.data?.greeting || '');
+      setNewDepartment(selectedNode.data?.newDepartment || '');
+    }
+  }, [selectedNode]);
+
   const updateNodeData = (nodeId, newData) => {
     setNodes((nds) =>
       nds.map((node) =>
@@ -117,7 +122,7 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
   };
 
   return (
-    <div style={sidebarStyle}>
+    <div className="sidebar" style={sidebarStyle}> {/* Add className */}
       {isOpen && (
         <>
           <button
@@ -141,7 +146,6 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
               <p>{selectedNode.description}</p>
               <hr />
 
-              {/* Render inputs based on node type */}
               {selectedNode.type === 'greetingNode' && (
                 <div>
                   <h4>Greeting Message</h4>
@@ -211,8 +215,6 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
                   </select>
                 </div>
               )}
-
-              {/* Add more node types as needed */}
             </>
           ) : (
             <p>Select a node to view details</p>
@@ -224,5 +226,3 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes }) => {
 };
 
 export default Sidebar;
-
- 
