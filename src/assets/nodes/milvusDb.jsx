@@ -13,12 +13,7 @@ const MilvusDb = ({ data }) => {
   return (
     <div style={{ padding: 10, border: '1px solid #ddd', borderRadius: 5 }}>
       <h4>VectorDatabase</h4>
-      <label>
-        Select vector database:{' '}
-        <select value={data.selected || 'milvus'} onChange={handleChange}>
-          <option value="milvus">Milvus</option>
-        </select>
-      </label>
+      <p>Selected vectorDb : {data.selected}</p>
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="target" // This handle is for incoming connections
