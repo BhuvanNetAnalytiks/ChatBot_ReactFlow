@@ -2,22 +2,21 @@ import React from 'react';
 
 const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
     const sidebarStyle = {
-        width: isOpen ? '600px' : '0', // Full width when open
-        minWidth: isOpen ? '250px' : '0', // Ensure minimum width
+        width: isOpen ? '600px' : '0', // Sidebar width when open
         padding: isOpen ? '10px' : '0', // Padding only when open
+        position: 'fixed', // Fix sidebar position
+        right: 0, // Attach to the right side
+        top: 0, // Start from the top
+        height: '100vh', // Full height
+        backgroundColor: '#fff',
         borderLeft: '1px solid #ddd',
         transition: 'width 0.3s ease', // Smooth transition
-        overflowY: 'auto', // Allow scrolling if content overflows
-        overflowX: 'hidden', // Prevent horizontal overflow
-        backgroundColor: '#fff',
-        height: '100%', // Full height
-        flexShrink: 0, // Prevent sidebar from shrinking
-        position: 'relative',
+        overflowY: 'auto', // Allow scrolling
         boxSizing: 'border-box', // Include padding/border in width calculation
     };
 
     return (
-        <div className="sidebar" style={sidebarStyle}>
+        <div style={sidebarStyle}>
             {isOpen && (
                 <>
                     <button
@@ -30,7 +29,6 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
                             border: 'none',
                             background: 'transparent',
                             fontSize: '20px',
-                            width: '10px',
                         }}
                     >
                         ×
@@ -38,9 +36,8 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar }) => {
                     {selectedNode ? (
                         <>
                             <h3>{selectedNode.name}</h3>
-                            <h4> ABOUT :  </h4>
+                            <h4> ABOUT : </h4>
                             <p>{selectedNode.description}</p>
-
                         </>
                     ) : (
                         <p>Select a node to view details</p>
