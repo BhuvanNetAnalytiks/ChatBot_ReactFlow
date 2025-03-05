@@ -11,7 +11,7 @@ import milvusdatabase from './milvusDb'
 import StartNode from './start';
 import hrNode from './hrNode';
 import ItNode from './itNode';
-import NewNode from './AddNodes';
+import DynamicNode from './DynamicNode';
 import Response from './response';
 import financeNode from './financeNode';
 import gladMessageNode from './gladmessage';
@@ -120,7 +120,7 @@ const CombinedFlow = () => {
             source: 'department-1',
             target: 'departmentdetectionnode-1',
             targetHandle: 'topTarget'
-        }
+        },
 
 
     ]);
@@ -193,27 +193,27 @@ const CombinedFlow = () => {
     const syncDepartmentNodes = useCallback(() => {
         const departmentNode = nodes.find((n) => n.id === 'department-1');
         if (!departmentNode) return;
-    
+
         const currentDepartments = departmentNode.data.departments || [];
         const departmentNodeTypes = {
             IT: 'Itnode',
             HR: 'HrNode',
             FINANCE: 'Financenode',
         };
-    
+
         // Get existing department nodes
         const existingDeptNodes = nodes.filter((n) =>
-            ['HrNode', 'Itnode', 'Financenode', 'NewNode'].includes(n.type)
+            ['HrNode', 'Itnode', 'Financenode','DynamicNode'].includes(n.type)
         );
         const existingDeptNames = existingDeptNodes.map((n) => n.data.name);
-    
+
         // Add new department nodes
         currentDepartments.forEach((dept, index) => {
             const deptNormalized = dept.trim();
             if (!existingDeptNames.includes(deptNormalized)) {
                 // Use specific type if it exists, otherwise use 'NewNode'
-                const nodeType = 
-                    departmentNodeTypes[deptNormalized.toUpperCase()] || 'NewNode';
+                const nodeType =
+                    departmentNodeTypes[deptNormalized.toUpperCase()] || 'DynamicNode';
                 const newNodeId = `${deptNormalized.toLowerCase()}node-${Date.now() + index}`;
                 const newNode = {
                     id: newNodeId,
@@ -226,7 +226,7 @@ const CombinedFlow = () => {
                         onOptions: handleNodeOptions,
                     },
                 };
-    
+                console.log('Creating new node:', newNode);
                 setNodes((nds) => [...nds, newNode]);
                 setEdges((eds) => [
                     ...eds,
@@ -243,7 +243,7 @@ const CombinedFlow = () => {
                 ]);
             }
         });
-    
+
         // Remove department nodes that are no longer in the list
         existingDeptNodes.forEach((node) => {
             if (!currentDepartments.includes(node.data.name)) {
@@ -490,17 +490,6 @@ const CombinedFlow = () => {
                 }
             },
             {
-                name:'DynamicNode',
-                description:'The dynamic node is responsible for adding new nodes dynamically',
-                id:'dynamicnode-1',
-                type:'newnode',
-                position:{x:1000, y: 500},
-                data:{
-                    id:'dynamicnode-1',
-                    onOptions: handleNodeOptions,
-                }                
-            },
-            {
                 name: 'RESPONSE ',
                 description: 'The response  is responsible for generating a response to the user prompt',
                 id: 'responsenode-1',
@@ -591,12 +580,12 @@ const CombinedFlow = () => {
         HrNode: hrNode,
         Itnode: ItNode,
         Financenode: financeNode,
-        newnode: NewNode, 
         Responsenode: Response,
         MilvusDatabaseNode: milvusdatabase,
         GladMessageNode: gladMessageNode,
         LLM: Llm,
         incidentCreation: incident,
+        DynamicNode: DynamicNode,
     };
 
     // Combined save function: Map each node type to its JSON template and merge them
@@ -729,30 +718,30 @@ const CombinedFlow = () => {
 
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
-          <Flow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            onNodeClick={onNodeClick}
-          >
-            <button
-              onClick={saveCombinedGraphToFile}
-              style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
+            <Flow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                nodeTypes={nodeTypes}
+                onNodeClick={onNodeClick}
             >
-              Build Json
-            </button>
-          </Flow>
-          <Sidebar
-            selectedNode={selectedNode}
-            isOpen={isSidebarOpen}
-            toggleSidebar={toggleSidebar}
-            setNodes={setNodes}
-          />
+                <button
+                    onClick={saveCombinedGraphToFile}
+                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
+                >
+                    Build Json
+                </button>
+            </Flow>
+            <Sidebar
+                selectedNode={selectedNode}
+                isOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+                setNodes={setNodes}
+            />
         </div>
-      );
-    };
-    
-    export default CombinedFlow; 
+    );
+};
+
+export default CombinedFlow; 
