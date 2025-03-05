@@ -1,7 +1,7 @@
 import React from 'react';
 import { Handle, Position } from '@xyflow/react';
 import NodeOptions from "./NodeOptions";
-const llmconnect = ({ data,selected }) => {
+const emailAgent = ({ data,selected }) => {
     const nodeStyle = {
         padding: 10,
         border: selected
@@ -15,7 +15,7 @@ const llmconnect = ({ data,selected }) => {
     };
     return (
         <div style={nodeStyle}>
-            <h4>Fetch answer from llm</h4>
+            <h4>Email Agent</h4>
             <NodeOptions id={data.id} onOptions={data.onOptions} />
             <Handle
                 type="target" // This handle is for incoming connections
@@ -32,4 +32,4 @@ const llmconnect = ({ data,selected }) => {
     );
 };
 
-export default llmconnect;
+export default emailAgent;

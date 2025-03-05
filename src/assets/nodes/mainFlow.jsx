@@ -4,6 +4,7 @@ import { ReactFlow, MiniMap, Controls, Background } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 const Flow = ({ nodes, edges, onNodesChange, onEdgesChange, onConnect, nodeTypes, children, onNodeClick }) => {
+  
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
       {/* Render any children (e.g. a common save button) */}

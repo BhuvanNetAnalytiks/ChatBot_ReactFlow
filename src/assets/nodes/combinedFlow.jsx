@@ -34,6 +34,9 @@ import GetDetAzure from '../../data/getDetails.json'; //Azure
 import MilvusDataJson from '../../data/milvusDatabase.json';
 import Financenode from './financeNode';
 import Sidebar from './sidebar';
+import voiceAgent from './voiceAgent';
+import emailAgent from './emailAgent';
+
 const CombinedFlow = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([
@@ -555,6 +558,17 @@ const CombinedFlow = () => {
                     onOptions: handleNodeOptions,
                 }
             },
+            // {
+            //     name: 'voiceAgent ',
+            //     description: 'The voice agent  is responsible for handling user prompts using voice commands',
+            //     id: 'voiceAgent-1',
+            //     type: 'voiceAgent',
+            //     position: { x: 500, y: 400 },
+            //     data: {
+            //         id: 'voiceAgent-1',
+            //         onOptions: handleNodeOptions,
+            //     }
+            // }
 
         ]);
     }, [setNodes, handleNodeOptions]); // Add handleNodeOptions to dependency array
@@ -586,6 +600,8 @@ const CombinedFlow = () => {
         LLM: Llm,
         incidentCreation: incident,
         DynamicNode: DynamicNode,
+        voiceAgent: voiceAgent,
+        emailAgent: emailAgent,
     };
 
     // Combined save function: Map each node type to its JSON template and merge them
@@ -739,6 +755,7 @@ const CombinedFlow = () => {
                 isOpen={isSidebarOpen}
                 toggleSidebar={toggleSidebar}
                 setNodes={setNodes}
+                setEdges={setEdges}
             />
         </div>
     );
