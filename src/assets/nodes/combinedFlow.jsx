@@ -676,10 +676,7 @@ const CombinedFlow = () => {
             MilvusDatabaseNode: (node) => {
                 return {
                     ...MilvusDataJson.steps[0],
-                    parameters: [{ "name": "question", "type": "body" }, { "name": "department", "type": "body" }, {
-                        "name": "top_k",
-                        "type": "body"
-                    }]
+                    parameters: [{ "name": "question", "type": "body" }]
                 }
             },
             GladMessageNode: (node) => {
