@@ -9,14 +9,6 @@
               {
                 "name": "description",
                 "type": "body"
-              },
-              {
-                "name": "urgency",
-                "type": "body"
-              },
-              {
-                "name": "impact",
-                "type": "body"
               }
             ]
         }    

@@ -4,7 +4,7 @@
             "function": "semantic_search_and_answer",
             "module": "main_library.Milvus_VectorDB_extraction",
             "endpoint": "/fetch_data_from_milvus",
-            "methods": ["GET"],
+            "methods": ["POST"],
             "parameters":[
               {
                 "name": "question",
@@ -12,10 +12,6 @@
               },
               {
                 "name": "department",
-                "type": "body"
-              },
-              {
-                "name": "top_k",
                 "type": "body"
               }
             ]

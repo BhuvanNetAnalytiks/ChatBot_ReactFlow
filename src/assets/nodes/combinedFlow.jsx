@@ -510,6 +510,7 @@ const CombinedFlow = () => {
                 type: 'MilvusDatabaseNode',
                 position: { x: 1000, y: 45 },
                 data: {
+                    selected: 'Milvus',
                     id: 'milvusnode-1',
                     onOptions: handleNodeOptions,
                 }
