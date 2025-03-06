@@ -177,15 +177,15 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes, setEdges }) =>
                                     <h4>Departments</h4>
                                     <ul>
                                         {departments.map((dept, index) => (
-                                            <li key={index}>
-                                                {dept}{' '}
-                                                <button
-                                                    onClick={() => handleRemoveDepartment(index)}
-                                                    style={{ color: 'red', marginLeft: '10px' }}
-                                                >
-                                                    Remove
-                                                </button>
-                                            </li>
+                                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
+                                            <span>{dept}</span>
+                                            <button
+                                              onClick={() => handleRemoveDepartment(index)}
+                                              style={{ color: 'red', marginLeft: '10px' }}
+                                            >
+                                              Remove
+                                            </button>
+                                          </li>
                                         ))}
                                     </ul>
                                     <input
@@ -195,7 +195,15 @@ const Sidebar = ({ selectedNode, isOpen, toggleSidebar, setNodes, setEdges }) =>
                                         placeholder="Add new department"
                                         style={{ width: '70%', padding: '5px', marginRight: '10px' }}
                                     />
-                                    <button onClick={handleAddDepartment}>Add</button>
+                                    <button onClick={handleAddDepartment}
+                                    style={{ 
+                                        padding: '8px 15px',
+                                        fontSize: '16px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        width: '120px',
+                                    }}
+                                    >Add</button>
                                 </div>
                             )}
 
