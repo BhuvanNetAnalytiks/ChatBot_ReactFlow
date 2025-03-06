@@ -9,10 +9,6 @@
               {
                 "name": "question",
                 "type": "body"
-              },
-              {
-                "name": "department",
-                "type": "body"
               }
             ]
         }    
