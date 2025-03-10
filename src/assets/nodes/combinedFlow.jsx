@@ -674,8 +674,6 @@
 
 // export default CombinedFlow; 
 
-
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNodesState, useEdgesState, addEdge, useReactFlow } from '@xyflow/react';
 import Flow from './mainFlow';
@@ -1001,6 +999,20 @@ const CombinedFlow = () => {
         }
     }, [edges]);
 
+    // Reset to default flow
+    const resetFlow = useCallback(() => {
+        console.log('Resetting flow to default state');
+        // Clear localStorage
+        localStorage.removeItem('react-flow-nodes');
+        localStorage.removeItem('react-flow-edges');
+        // Reset nodes and edges to initial state
+        setNodes(initialNodes.map(node => ({
+            ...node,
+            data: { ...node.data, onOptions: handleNodeOptions }
+        })));
+        setEdges(defaultEdges);
+    }, [setNodes, setEdges]);
+
     const onNodeClick = useCallback((event, node) => {
         console.log("Node is being clicked!");
         setSelectedNode(node);
@@ -1248,9 +1260,15 @@ const CombinedFlow = () => {
             >
                 <button
                     onClick={saveCombinedGraphToFile}
-                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue' }}
+                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'blue', top: 10 }}
                 >
                     Build Json
+                </button>
+                <button
+                    onClick={resetFlow}
+                    style={{ position: 'absolute', zIndex: 10, padding: 10, color: 'red', top: 50 }}
+                >
+                    Reset Flow
                 </button>
             </Flow>
             <Sidebar
