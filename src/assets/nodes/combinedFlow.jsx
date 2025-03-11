@@ -1203,12 +1203,16 @@ const CombinedFlow = () => {
             GladMessageNode: (node) => {
                 return null;
             },
+            
             LLM: (node) => {
                 return null;
             },
             incidentCreation: (node) => {
                 return null;
             },
+            DynamicNode: (node) => {
+                return null;
+            }
         };
 
         const combinedSteps = nodes.reduce((acc, node) => {
