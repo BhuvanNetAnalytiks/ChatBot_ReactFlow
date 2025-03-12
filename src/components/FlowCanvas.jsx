@@ -21,6 +21,7 @@ import GreetingMessage from './NodeTypes/GreetingNode.jsx';
 import TicketCreation from './NodeTypes/TicketCreation.jsx';
 import LLM from './NodeTypes/LLM.jsx';
 import Prompt from './NodeTypes/prompt.jsx';
+import ticketcreated from './NodeTypes/TicketCreated.jsx';
 
 // Predefined JSON files (add more as needed)
 const preDefinedJsonFile = {
@@ -122,12 +123,13 @@ const nodeTypes = {
   ticketcreation: TicketCreation,
   llm: LLM,
   prompt: Prompt,
+  ticketcreated: ticketcreated,
 };
 
 // Updated initialNodes with predefinedJson for all nodes
 const initialNodes = [
   { id: '1', type: 'start', data: { predefinedJson: 'startNode.json' }, position: { x: 100, y: 200 } },
-  { id: '2', type: 'authenticatedNode', data: { predefinedJson: 'authNode.json', predefinedJson: 'handleCallback.json' }, position: { x: 300, y: 40 } },
+  { id: '2', type: 'authenticatedNode', data: { predefinedJson: 'authNode.json' }, position: { x: 300, y: 40 } },
   { id: '3', type: 'notAuthenticatedNode', data: { predefinedJson: 'authNode.json' }, position: { x: 300, y: 200 } },
   { id: '4', type: 'departmentClassifier', data: { predefinedJson: 'deptClassifier.json' }, position: { x: 600, y: 350 } },
   { id: '5', type: 'greetingMessage', data: { predefinedJson: 'messageNode.json' }, position: { x: 600, y: 40 } },
@@ -143,6 +145,8 @@ const initialNodes = [
   { id: '15', type: 'response', data: { predefinedJson: 'responseNode.json' }, position: { x: 1300, y: 500 } },
   { id: '16', type: 'response', data: { predefinedJson: 'responseNode.json' }, position: { x: 1300, y: 400 } },
   { id: '17', type: 'response', data: { predefinedJson: 'responseNode.json' }, position: { x: 1300, y: 300 } },
+  { id: '18', type: 'ticketcreated', data: { predefinedJson: 'ticketcreated.json' }, position: { x: 2400, y: 500 } },
+  { id: '19', type: 'gladMessage', data: { predefinedJson: 'messageNode.json' }, position: { x: 2400, y: 300 } },
 ];
 
 // Function to generate orchestration JSON
@@ -194,6 +198,9 @@ const FlowCanvas = () => {
     { id: 'e17-10', source: '17', target: '10', label: 'NO' },
     { id: 'e10-12', source: '10', target: '12', label: 'NO' },
     { id: 'e10-9', source: '10', target: '9', label: 'YES' },
+    { id: 'e12-18', source: '12', target: '18' , label: 'NO'},
+    { id: 'e12-19', source: '12', target: '19' , label: 'YES'}
+  
   ]);
 
   const onConnect = useCallback(
