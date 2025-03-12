@@ -153,12 +153,13 @@ const FlowCanvas = () => {
       "id" : "e1-2",
       "source" : "1",
       "target" : "2",
-      "label" : "Yes"
+      "label" : "YES"
     },
     {
       "id" : "e1-3",
       "source" : "1",
       "target" : "3",
+      "label" : "NO"
     },
     {
       "id" : "e1-13",
@@ -237,28 +238,29 @@ const FlowCanvas = () => {
       "id" : "e17-11",
       "source" : "17",
       "target" : "11",
-      "label":"Yes",
+      "label":"YES",
     },
     {
 
       "id" : "e17-10",
       "source" : "17",
       "target" : "10",
-      "label":"No",
+      "label":"NO",
     },
+   
     {
 
       "id" : "e10-12",
       "source" : "10",
       "target" : "12",
-      "label":"No",
+      "label":"NO",
     },
     {
 
-      "id" : "e9-12",
-      "source" : "9",
-      "target" : "12",
-      "label":"Yes",
+      "id" : "e10-9",
+      "source" : "10",
+      "target" : "9",
+      "label":"YES",
     },
 
     
