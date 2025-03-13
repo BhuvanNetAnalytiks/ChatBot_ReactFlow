@@ -16,7 +16,7 @@ const NotAuthenticated = ({ data , selected }) => {
   };
   return (
     <div style={nodeStyle}>
-      <strong>Not Authenticated</strong>
+      <strong>Authenticate</strong>
       <NodeOptions id={data.id} onOptions={data.onOptions} />
       <Handle
         type="source" // This handle is for incoming connections

@@ -24,6 +24,7 @@ import Prompt from './NodeTypes/prompt.jsx';
 import ticketcreated from './NodeTypes/TicketCreated.jsx';
 import voiceagent from './NodeTypes/voiceAgent.jsx';
 import mailagent from './NodeTypes/mailAgent.jsx';
+import chatagent from './NodeTypes/chatAgent.jsx';
 // Predefined JSON files (add more as needed)
 const preDefinedJsonFile = {
   'startNode.json': {
@@ -127,6 +128,7 @@ const nodeTypes = {
   ticketcreated: ticketcreated,
   voiceagent: voiceagent,
   mailagent:mailagent,
+  chatagent:chatagent,
 };
 
 // Updated initialNodes with predefinedJson for all nodes
@@ -152,6 +154,7 @@ const initialNodes = [
   { id: '19', type: 'gladMessage', data: { predefinedJson: 'messageNode.json' }, position: { x: 2400, y: 300 } },
   { id: '20', type: 'voiceagent', data: { predefinedJson: 'voiceagent.json' }, position: { x: 50, y:300 } },
   { id: '21', type: 'mailagent', data: { predefinedJson: 'mailagent.json' }, position: { x: 50, y: 400 } },
+  { id: '22', type: 'chatagent', data: { predefinedJson: 'chatagent.json' }, position: { x: 50, y: 500 } },
 ];
 
 // Function to generate orchestration JSON
@@ -187,9 +190,9 @@ const generateOrchestrationJSON = (nodes, edges) => {
 const FlowCanvas = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([
-    { id: 'e1-2', source: '1', target: '2', label: 'YES' },
-    { id: 'e1-3', source: '1', target: '3', label: 'NO' },
-    { id: 'e1-13', source: '1', target: '13' },
+    { id: 'e1-2', source: '1', target: '2', label: 'IF' },
+    { id: 'e1-3', source: '1', target: '3', label: 'ELSE' },
+    
     { id: 'e2-5', source: '2', target: '5' },
     { id: 'e3-14', source: '3', target: '14' },
     { id: 'e13-4', source: '13', target: '4' },
@@ -204,8 +207,13 @@ const FlowCanvas = () => {
     { id: 'e10-12', source: '10', target: '12', label: 'NO' },
     { id: 'e10-9', source: '10', target: '9', label: 'YES' },
     { id: 'e12-18', source: '12', target: '18' , label: 'NO'},
-    { id: 'e12-19', source: '12', target: '19' , label: 'YES'}
-  
+    { id: 'e12-19', source: '12', target: '19' , label: 'YES'},
+    {id:'e1-20',source:'1',target:'20'},
+    {id:'e20-13',source:'20',target:'13'},
+    {id:'e1-21',source:'1',target:'21'},
+    {id:'e21-13',source:'21',target:'13'},
+    {id:'e1-22',source:'1',target:'22'},
+    {id:'e22-13',source:'22',target:'13'},
   ]);
 
   const onConnect = useCallback(
