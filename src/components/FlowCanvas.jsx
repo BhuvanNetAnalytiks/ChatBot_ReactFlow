@@ -22,7 +22,8 @@ import TicketCreation from './NodeTypes/TicketCreation.jsx';
 import LLM from './NodeTypes/LLM.jsx';
 import Prompt from './NodeTypes/prompt.jsx';
 import ticketcreated from './NodeTypes/TicketCreated.jsx';
-
+import voiceagent from './NodeTypes/voiceAgent.jsx';
+import mailagent from './NodeTypes/mailAgent.jsx';
 // Predefined JSON files (add more as needed)
 const preDefinedJsonFile = {
   'startNode.json': {
@@ -124,11 +125,13 @@ const nodeTypes = {
   llm: LLM,
   prompt: Prompt,
   ticketcreated: ticketcreated,
+  voiceagent: voiceagent,
+  mailagent:mailagent,
 };
 
 // Updated initialNodes with predefinedJson for all nodes
 const initialNodes = [
-  { id: '1', type: 'start', data: { predefinedJson: 'startNode.json' }, position: { x: 100, y: 200 } },
+  { id: '1', type: 'start', data: { predefinedJson: 'startNode.json' }, position: { x:-300, y: 200 } },
   { id: '2', type: 'authenticatedNode', data: { predefinedJson: 'authNode.json' }, position: { x: 300, y: 40 } },
   { id: '3', type: 'notAuthenticatedNode', data: { predefinedJson: 'authNode.json' }, position: { x: 300, y: 200 } },
   { id: '4', type: 'departmentClassifier', data: { predefinedJson: 'deptClassifier.json' }, position: { x: 600, y: 350 } },
@@ -147,11 +150,13 @@ const initialNodes = [
   { id: '17', type: 'response', data: { predefinedJson: 'responseNode.json' }, position: { x: 1300, y: 300 } },
   { id: '18', type: 'ticketcreated', data: { predefinedJson: 'ticketcreated.json' }, position: { x: 2400, y: 500 } },
   { id: '19', type: 'gladMessage', data: { predefinedJson: 'messageNode.json' }, position: { x: 2400, y: 300 } },
+  { id: '20', type: 'voiceagent', data: { predefinedJson: 'voiceagent.json' }, position: { x: 50, y:300 } },
+  { id: '21', type: 'mailagent', data: { predefinedJson: 'mailagent.json' }, position: { x: 50, y: 400 } },
 ];
 
 // Function to generate orchestration JSON
 const generateOrchestrationJSON = (nodes, edges) => {
-  // Start from the "start" node (id: "1") and follow the edges
+  // Start from the "start" node (id: "1") and follow the edges  
   const steps = [];
   const visited = new Set();
   const traverseFlow = (nodeId) => {
@@ -208,6 +213,51 @@ const FlowCanvas = () => {
     [setEdges]
   );
 
+  const handleNodeOptions = (nodeId, action) => {
+    switch (action) {
+      case 'delete':
+        setNodes((nds) => nds.filter((node) => node.id !== nodeId));
+        setEdges((eds) => eds.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
+        break;
+      case 'copy':
+        const nodeToCopy = nodes.find((node) => node.id === nodeId);
+        if (nodeToCopy) {
+          const newNode = { 
+            ...nodeToCopy,
+            id: `${nodeToCopy.id}-copy-${Date.now()}`,
+            position: { x: nodeToCopy.position.x + 50, y: nodeToCopy.position.y + 50 },
+          };
+          setNodes((nds) => nds.concat(newNode));
+        }
+        break;
+      case 'change':
+        // Handle changing the block (e.g., open a modal to select a new type)
+        alert(`Change block for node ${nodeId}`);
+        break;
+      case 'about':
+        // Show info about the node
+        const node = nodes.find((node) => node.id === nodeId);
+        if (node) {
+          alert(`Node ID: ${node.id}\nType: ${node.type}\nPredefined JSON: ${node.data.predefinedJson}`);
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const customNodeTypes = {
+    ...nodeTypes,
+    default: (props) => {
+      const nodeData = { ...props.data, onOptions: handleNodeOptions };
+      return (
+        <div style={{ position: 'relative' }}>
+          {nodeTypes[props.type]({ ...props, data: nodeData })}
+        </div>
+      );
+    },
+  };
+
   const handleSaveOrchestration = () => {
     const jsonContent = generateOrchestrationJSON(nodes, edges);
 
@@ -233,7 +283,7 @@ const FlowCanvas = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        nodeTypes={nodeTypes}
+        nodeTypes={customNodeTypes}
         fitView
       >
         <MiniMap />

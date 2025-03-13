@@ -19,6 +19,15 @@ const NodeOptions = ({ id, onOptions }) => {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
+  const handleOptionClick = (action) => {
+    if (typeof onOptions === 'function') {
+      onOptions(id, action);
+    } else {
+      console.error('onOptions is not a function');
+    }
+    setShowOptions(false);
+  };
+
   return (
     <>
       <button
@@ -59,8 +68,9 @@ const NodeOptions = ({ id, onOptions }) => {
             style={{ padding: "5px", cursor: "pointer" }}
             onClick={(e) => {
               e.stopPropagation();
-              onOptions(id, "delete");  // Delete the node
-              setShowOptions(false);
+              // onOptions(id, "delete");  // Delete the node
+              // setShowOptions(false);
+              handleOptionClick('delete');
             }}
           >
             Delete Node
